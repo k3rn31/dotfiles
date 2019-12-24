@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Set some defalut applications
+export TERMINAL=st
+export BROWSER=qutebrowser
+
+# Position external display
+if xrandr --verbose | grep -w -q "HDMI-1 connected"; then
+  echo "External display detected"
+  xrandr --output HDMI-1 --primary --auto --output eDP-1 --right-of HDMI-1 
+fi
+
+# Setup Keyboard
+setxkbmap \
+  -variant alt-intl \
+  -option \
+  -option lv3:ralt_switch \
+  -option compose:rctrl \
+  -option eurosign:e \
+  -option ctrl:nocaps \
+  -option nbsp:level3n

@@ -1,0 +1,389 @@
+* Emacs Configuration
+
+
+** Package configuration
+
+I use =use-packages= which is setup in =init.el= to ensure that it is
+installed right away.
+
+Let’s make sure that =use-packages= will install packages if they are
+not yet available.
+
+#+BEGIN_SRC emacs-lisp
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+#+END_SRC
+
+Always compile packages and use the newest version available.
+
+#+BEGIN_SRC emacs-lisp
+(use-package auto-compile
+  :config (auto-compile-on-load-mode))
+(setq load-prefer-newer t)
+#+END_SRC
+
+
+** Setup Load Path
+
+Add the =resources= directory to =load-path=.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/resources/")
+#+END_SRC
+
+
+** Basic Configuration
+
+*** Setup Sensible Defaults
+**** Open Files from Home
+When opening a file, start searching at user’s home directory.
+
+#+BEGIN_SRC emacs-lisp
+(setq default-directory "~/")
+#+END_SRC
+
+**** Increase GC threshold
+Allow 20MB of memory (instead of 0.76MB) before calling garbage
+collection.
+
+#+BEGIN_SRC emacs-lisp
+(setq gc-cons-threshold 20000000)
+#+END_SRC
+
+**** Delete Trailing Whitespace
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+**** Single Space After Periods
+Don’t assume that sentences should have two spaces after periods.
+
+#+BEGIN_SRC emacs-lisp
+(setq sentence-end-souble-space nil)
+#+END_SRC
+
+**** Overwrite Selected Text
+If some text is selected and you write something, that should replace
+the selected text.
+
+#+BEGIN_SRC emacs-lisp
+(setq delete-selection-mode t)
+#+END_SRC
+
+**** Ensure That Files End With Newline
+Append a newline if it doesn’t exist upon saving.
+
+#+BEGIN_SRC emacs-lisp
+(setq require-final-newline t)
+#+END_SRC
+
+**** Quiet Startup
+Remove /splash screen/ and clear the scratch buffer.
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area t
+      initial-scratch-message nil)
+#+END_SRC
+
+**** Flash Screen Instead of Bell
+In my office environment I prefer to be quiet.
+
+#+BEGIN_SRC emacs-lisp
+(setq visible-bell t)
+#+END_SRC
+
+**** Set Default Line Length
+I want my default line length to be 80 columns.
+
+#+BEGIN_SRC emacs-lisp
+(setq fill-column 80)
+#+END_SRC
+
+**** Debug on Error
+Errors should produce backtraces when they occur.
+
+#+BEGIN_SRC emacs-lisp
+(setq debug-on-error t)
+#+END_SRC
+
+**** Always Indent With Spaces
+
+Tabs are evil, never use tabs.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
+**** Character Encoding
+
+Set UTF-8 as the default encoding.
+
+#+BEGIN_SRC emacs-lisp
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-language-environment 'utf-8)
+(set-selection-coding-system 'utf-8)
+#+END_SRC
+
+*** IDO Mode
+
+Use =ido-mode= everywhere.
+
+#+BEGIN_SRC emacs-lisp
+(ido-mode 1)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+#+END_SRC
+
+
+** UI Preferences
+
+*** Tweak Window
+
+I don’t want GUI stuff showing up.
+
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+END_SRC
+
+Display line numbers by default.
+
+#+BEGIN_SRC emacs-lisp
+(when (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode))
+#+END_SRC
+
+*** Load a Theme
+
+I’m currently using /kaolin-ocean/ theme.
+
+#+BEGIN_SRC emacs-lisp
+(use-package kaolin-themes
+  :config
+  (load-theme 'kaolin-ocean t))
+#+END_SRC
+
+*** Set Default Font and Font Sizes
+
+I want my default font to be Inconsolata.
+
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((find-font (font-spec :name "Inconsolata"))
+  (set-frame-font "Inconsolata 11"))
+ ((find-font (font-spec :name "Consolas"))
+  (set-frame-font "Consolas 11")))
+#+END_SRC
+
+**** Set Fonts for Specific Modes
+Here I set some fonts for specific modes, but probably this should be
+moved to the specific mode section.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'Info-mode-hook (lambda ()
+			   (setq buffer-face-mode-face '(:family "Fira Mono" :height 110))
+			   (buffer-face-mode)))
+(add-hook 'org-mode-hook (lambda ()
+			   (setq buffer-face-mode-face '(:family "Fira Mono" :height 110))
+			   (buffer-face-mode)))
+#+END_SRC
+
+
+** Org-mode
+
+*** Keybindings
+
+Bind a few handy keys.
+
+#+BEGIN_SRC emacs-lisp
+  (define-key global-map "\C-cl" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+  (define-key global-map "\C-cc" 'org-capture)
+#+END_SRC
+
+*** GTD Setup
+
+The GTD part of this config is heavily inspired by [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Org-mode GTD]].
+
+Setup agenda files with /index/, /gtd/ and /tickler/.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files '("~/gtd/inbox.org"
+			 "~/gtd/gtd.org"
+			 "~/gtd/tickler.org"))
+#+END_SRC
+
+Refile targets are /gtd/, /someday/ and /tickler/.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 2)
+			   ("~/gtd/someday.org" :level . 1)
+			   ("~/gtd/tickler.org" :maxlevel . 2)))
+#+END_SRC
+
+The most basic logging is to keep track of /when/ a certain TODO item
+was finished.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-log-done 'time)
+#+END_SRC
+
+Setup capture templates.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates '(("t" "Todo [inbox]" entry
+			      (file+headline "~/gtd/inbox.org" "Inbox")
+			      "* TODO %i%?")
+			      ("T" "Tickler" entry
+			      (file+headline "~/gtd/tickler.org" "Tickler")
+		              "* TODO %i%? \n %T")))
+#+END_SRC
+
+Customize the sequence of TODOs statuses.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|"
+                                    "DONE(d)" "CANCELLED(c)")))
+#+END_SRC
+
+*** Exporters From Contrib
+
+**** Confluence
+Require =ox-confluence= to export framework, since I like to write my
+Confluence wiki pages outside of Confluence itself.
+
+#+BEGIN_SRC emacs-lisp
+(require 'ox-confluence)
+#+END_SRC
+
+
+** Evil Mode
+Use =evil-mode=.
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  :config
+#+END_SRC
+
+Use =evil-collection= to add a set of keybindings for =evil-mode=.
+#+BEGIN_SRC emacs-lisp
+  (evil-mode 1)
+  (use-package evil-collection
+    :ensure t
+    :config
+    (evil-collection-init))
+#+END_SRC
+
+Use =evil-mode= with Org agendas.
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-org
+    :after org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook (lambda () (evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys)))
+#+END_SRC
+
+
+** Magit
+Use =magit=, a lovely porcelain to work with Git within Emacs.
+
+I tweak a few things:
+- Bring up the status menu with =C-x g=.
+- Use =evil-mode= keybindings with =magit=.
+- Highlight commit test in summary lime beyond 55 characters.
+- Start in instert mode when writing a commit message.
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :bind
+  ("C-x g" . magit-status)
+  :config
+  (use-package evil-magit
+    :after evil)
+  (use-package with-editor)
+  (setq git-commit-summary-max-length 55)
+  (add-hook 'with-editor-mode-hook 'evil-insert-state))
+#+END_SRC
+
+
+** Writing Prose
+
+*** Wrap Paragraphs Automatically
+
+When writing prose I want to automatically wrap paragraphs.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'auto-fill-mode)
+(add-hook 'text-mode-hook 'auto-fill-mode)
+#+END_SRC
+
+*** Enable =electric-quote-mode=
+
+I want =electric-quote-mode= enabled by default when writing prose.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'electric-quote-mode)
+(add-hook 'text-mode-hook 'electric-quote-mode)
+#+END_SRC
+
+
+** Languages
+Add colorful parenthesis matching in all programming modes.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+#+END_SRC
+
+*** Lisp
+Make handling lisp expressions much, much easier.
+
+#+BEGIN_SRC emacs-lisp
+(use-package paredit)
+#+END_SRC
+
+*** Clojure
+Key bindings and colorization for closure.
+
+#+BEGIN_SRC emacs-lisp
+(use-package clojure-mode
+  :after paredit
+  :hook (enable-paredit-mode subword-mode)
+  :config
+  ;; use clojure-mode for other extensions
+  (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
+  (use-package clojure-mode-extra-font-locking))
+#+END_SRC
+
+Integration with a Clojure REPL.
+
+#+BEGIN_SRC emacs-lisp
+(use-package cider
+  :after paredit
+  ;; provides minibuffer documentation for the code you’re typing into repl
+  ;; and enable paredit in REPL
+  :hook ((cider-mode . eldoc-mode)
+         (cider-mode . paredit-mode))
+  :config
+  ;; go right to the REPL buffer when it’s finished connecting
+  (setq cider-repl-pop-to-buffer-on-connect t)
+  ;; when there’s a cider error, show its buffer and switch to it
+  (setq cider-show-error-buffer t)
+  (setq cider-auto-select-error-buffer t)
+  ;; Where to store cider history
+  (setq cider-repl-history-file "~/.emacs.d/cider-history")
+  ;; Wrap when navigating history
+  (setq cider-repl-wrap-history t))
+#+END_SRC

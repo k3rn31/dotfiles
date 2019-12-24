@@ -1,0 +1,67 @@
+#  _ _____ _     _            _
+# (_)___ /| |__ | | ___   ___| | _____
+# | | |_ \| '_ \| |/ _ \ / __| |/ / __|
+# | |___) | |_) | | (_) | (__|   <\__ \
+# |_|____/|_.__/|_|\___/ \___|_|\_\___/
+
+
+# Global properties
+separator=false
+separator_block_width=15
+markup=none
+
+#[window]
+#command=$SCRIPT_DIR/title
+#interval=persist
+#align=center
+#separator=true
+
+[pacman-updates]
+command=$SCRIPT_DIR/arch-update
+markup=pango
+interval= 3600
+QUIET=true
+WATCH=^linux.* ^pacman.*
+BASE_COLOR=#5fff5f
+UPDATE_COLOR=#FFFF85
+AUR=true
+LABEL= 
+
+[memory]
+command=$SCRIPT_DIR/memory
+label= 
+# separator=true
+interval=30
+
+[battery2]
+command=$SCRIPT_DIR/battery2
+markup=pango
+interval=5
+
+[volume-pulseaudio]
+command=$SCRIPT_DIR/volume-pulseaudio
+interval=once
+signal=10
+#MIXER=[determined automatically]
+#SCONTROL=[determined automatically]
+##exposed format variables: ${SYMB}, ${VOL}, ${INDEX}, ${NAME}
+#LONG_FORMAT="${SYMB} ${VOL}% [${INDEX}:${NAME}]"
+#SHORT_FORMAT="${SYMB} ${VOL}% [${INDEX}]"
+LONG_FORMAT="${SYMB} ${VOL}%"
+AUDIO_HIGH_SYMBOL= 
+#AUDIO_MED_THRESH=50
+AUDIO_MED_SYMBOL= 
+#AUDIO_LOW_THRESH=0
+AUDIO_LOW_SYMBOL= 
+#AUDIO_DELTA=5
+#DEFAULT_COLOR="#ffffff"
+#MUTED_COLOR="#a0a0a0"
+#USE_ALSA_NAME=0
+#USE_DESCRIPTION=0
+## SUBSCRIBE=1 requires interval=persist and always uses LONG_FORMAT
+#SUBSCRIBE=0
+
+[time]
+command=date '+%a, %b %e %H:%M:%S'
+label= 
+interval=1
