@@ -1,6 +1,7 @@
 ;; Configure package.el to include MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 
 ;; Ensure that use-package is installed.
@@ -15,7 +16,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evil-magit magit evil-org evil kaolin-themes auto-compile use-package)))
+    (## evil-magit magit evil-org evil kaolin-themes auto-compile use-package)))
  '(scheme-program-name "mit-scheme"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
