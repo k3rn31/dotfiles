@@ -10,10 +10,9 @@ ricing for aesthetic purposes, but always as an aside to usabilty and
 productivity.
 
 My main terminal is [st](https://st.suckless.org/), which is
-configured at compile time. In this repository there is the `config.h`
-file, but it isn't really a dotfile since it is not read at runtime. I
-maintain my own [PKGBUILD](https://github.com/k3rn31/st) to configure,
-build and install my own flavour of *st*.
+configured at compile time. This repository has a submodule pointing
+to my own [PKGBUILD](https://github.com/k3rn31/st), used to build and
+install my own flavour of *st*.
 
 My Emacs setup is also included in the repository. The
 [configuration](.emacs.d/configuration.org) is done in _literate
