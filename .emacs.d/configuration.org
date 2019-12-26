@@ -329,6 +329,7 @@ I want =electric-quote-mode= enabled by default when writing prose.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook 'electric-quote-mode)
 (add-hook 'text-mode-hook 'electric-quote-mode)
+(add-hook 'markdown-mode-hook 'electric-quote-mode)
 #+END_SRC
 
 ** Languages
