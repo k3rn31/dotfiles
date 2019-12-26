@@ -1,8 +1,5 @@
 * Emacs Configuration
-
-
 ** Package configuration
-
 I use =use-packages= which is setup in =init.el= to ensure that it is
 installed right away.
 
@@ -22,19 +19,17 @@ Always compile packages and use the newest version available.
 (setq load-prefer-newer t)
 #+END_SRC
 
-
 ** Setup Load Path
-
 Add the =resources= directory to =load-path=.
 
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'load-path "~/.emacs.d/resources/")
 #+END_SRC
 
-
 ** Basic Configuration
 
-*** Setup Sensible Defaults
+*** Setup Sensible DefaultS
+
 **** Open Files from Home
 When opening a file, start searching at user’s home directory.
 
@@ -51,7 +46,6 @@ collection.
 #+END_SRC
 
 **** Delete Trailing Whitespace
-
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
@@ -109,7 +103,6 @@ Errors should produce backtraces when they occur.
 #+END_SRC
 
 **** Always Indent With Spaces
-
 Tabs are evil, never use tabs.
 
 #+BEGIN_SRC emacs-lisp
@@ -117,7 +110,6 @@ Tabs are evil, never use tabs.
 #+END_SRC
 
 **** Character Encoding
-
 Set UTF-8 as the default encoding.
 
 #+BEGIN_SRC emacs-lisp
@@ -128,7 +120,6 @@ Set UTF-8 as the default encoding.
 #+END_SRC
 
 *** IDO Mode
-
 Use =ido-mode= everywhere.
 
 #+BEGIN_SRC emacs-lisp
@@ -137,11 +128,8 @@ Use =ido-mode= everywhere.
 (setq ido-everywhere t)
 #+END_SRC
 
-
 ** UI Preferences
-
 *** Tweak Window
-
 I don’t want GUI stuff showing up.
 
 #+BEGIN_SRC emacs-lisp
@@ -158,7 +146,6 @@ Display line numbers by default.
 #+END_SRC
 
 *** Load a Theme
-
 I’m currently using /kaolin-ocean/ theme.
 
 #+BEGIN_SRC emacs-lisp
@@ -168,7 +155,6 @@ I’m currently using /kaolin-ocean/ theme.
 #+END_SRC
 
 *** Set Default Font and Font Sizes
-
 I want my default font to be Inconsolata.
 
 #+BEGIN_SRC emacs-lisp
@@ -185,44 +171,42 @@ moved to the specific mode section.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'Info-mode-hook (lambda ()
-			   (setq buffer-face-mode-face '(:family "Fira Mono" :height 110))
-			   (buffer-face-mode)))
+                           (setq buffer-face-mode-face
+                           '(:family "Fira Mono" :height 110))
+                           (buffer-face-mode)))
 (add-hook 'org-mode-hook (lambda ()
-			   (setq buffer-face-mode-face '(:family "Fira Mono" :height 110))
-			   (buffer-face-mode)))
+                           (setq buffer-face-mode-face
+                           '(:family "Fira Mono" :height 110))
+                           (buffer-face-mode)))
 #+END_SRC
 
-
 ** Org-mode
-
 *** Keybindings
-
 Bind a few handy keys.
 
 #+BEGIN_SRC emacs-lisp
-  (define-key global-map "\C-cl" 'org-store-link)
-  (define-key global-map "\C-ca" 'org-agenda)
-  (define-key global-map "\C-cc" 'org-capture)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-cc" 'org-capture)
 #+END_SRC
 
 *** GTD Setup
-
 The GTD part of this config is heavily inspired by [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Org-mode GTD]].
 
 Setup agenda files with /index/, /gtd/ and /tickler/.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-agenda-files '("~/gtd/inbox.org"
-			 "~/gtd/gtd.org"
-			 "~/gtd/tickler.org"))
+                         "~/gtd/gtd.org"
+                         "~/gtd/tickler.org"))
 #+END_SRC
 
 Refile targets are /gtd/, /someday/ and /tickler/.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 2)
-			   ("~/gtd/someday.org" :level . 1)
-			   ("~/gtd/tickler.org" :maxlevel . 2)))
+                           ("~/gtd/someday.org" :level . 1)
+                           ("~/gtd/tickler.org" :maxlevel . 2)))
 #+END_SRC
 
 The most basic logging is to keep track of /when/ a certain TODO item
@@ -236,11 +220,11 @@ Setup capture templates.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
-			      (file+headline "~/gtd/inbox.org" "Inbox")
-			      "* TODO %i%?")
-			      ("T" "Tickler" entry
-			      (file+headline "~/gtd/tickler.org" "Tickler")
-		              "* TODO %i%? \n %T")))
+                              (file+headline "~/gtd/inbox.org" "Inbox")
+                              "* TODO %i%?")
+                              ("T" "Tickler" entry
+                              (file+headline "~/gtd/tickler.org" "Tickler")
+                              "* TODO %i%? \n %T")))
 #+END_SRC
 
 Customize the sequence of TODOs statuses.
@@ -251,7 +235,6 @@ Customize the sequence of TODOs statuses.
 #+END_SRC
 
 *** Exporters From Contrib
-
 **** Confluence
 Require =ox-confluence= to export framework, since I like to write my
 Confluence wiki pages outside of Confluence itself.
@@ -260,26 +243,24 @@ Confluence wiki pages outside of Confluence itself.
 (require 'ox-confluence)
 #+END_SRC
 
-
 ** Markdown Mode
-
 Autoload the major mode =markdown-mode= for =.md= and =.markdown=
 extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for
 =README.md= files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :ensure t
-    :commands (markdown-mode gfm-mode)
-    :mode (("README\\.md\\'" . gfm-mode)
-           ("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 #+END_SRC
-
 
 ** Evil Mode
 Use =evil-mode=.
+
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :ensure t
@@ -291,6 +272,7 @@ Use =evil-mode=.
 #+END_SRC
 
 Use =evil-collection= to add a set of keybindings for =evil-mode=.
+
 #+BEGIN_SRC emacs-lisp
 (use-package evil-collection
   :after evil
@@ -309,7 +291,6 @@ Use =evil-mode= with Org agendas.
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 #+END_SRC
-
 
 ** Magit
 Use =magit=, a lovely porcelain to work with Git within Emacs.
@@ -332,11 +313,8 @@ I tweak a few things:
   (add-hook 'with-editor-mode-hook 'evil-insert-state))
 #+END_SRC
 
-
 ** Writing Prose
-
 *** Wrap Paragraphs Automatically
-
 When writing prose I want to automatically wrap paragraphs.
 
 #+BEGIN_SRC emacs-lisp
@@ -346,14 +324,12 @@ When writing prose I want to automatically wrap paragraphs.
 #+END_SRC
 
 *** Enable =electric-quote-mode=
-
 I want =electric-quote-mode= enabled by default when writing prose.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook 'electric-quote-mode)
 (add-hook 'text-mode-hook 'electric-quote-mode)
 #+END_SRC
-
 
 ** Languages
 Add colorful parenthesis matching in all programming modes.
