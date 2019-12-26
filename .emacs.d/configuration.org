@@ -270,26 +270,27 @@ Use =evil-mode=.
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :config
+  (evil-mode 1))
 #+END_SRC
 
 Use =evil-collection= to add a set of keybindings for =evil-mode=.
 #+BEGIN_SRC emacs-lisp
-  (evil-mode 1)
-  (use-package evil-collection
-    :ensure t
-    :config
-    (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 #+END_SRC
 
 Use =evil-mode= with Org agendas.
 #+BEGIN_SRC emacs-lisp
-  (use-package evil-org
-    :after org
-    :config
-    (add-hook 'org-mode-hook 'evil-org-mode)
-    (add-hook 'evil-org-mode-hook (lambda () (evil-org-set-key-theme)))
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys)))
+(use-package evil-org
+  :after (:all evil org)
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook (lambda () (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 #+END_SRC
 
 
