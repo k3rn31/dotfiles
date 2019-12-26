@@ -12,8 +12,8 @@ productivity.
 My main terminal is [st](https://st.suckless.org/), which is
 configured at compile time. In this repository there is the `config.h`
 file, but it isn't really a dotfile since it is not read at runtime. I
-maintain my own PKGBUILD to configure, build and install my own
-flavour of *st*.
+maintain my own [PKGBUILD](https://github.com/k3rn31/st) to configure,
+build and install my own flavour of *st*.
 
 My Emacs setup is also included in the repository. The
 [configuration](.emacs.d/configuration.org) is done in _literate
