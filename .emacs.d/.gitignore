@@ -4,3 +4,4 @@ configuration.el
 elpa/
 *.last
 transient/
+recentf

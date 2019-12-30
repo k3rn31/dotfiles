@@ -117,15 +117,6 @@ Set UTF-8 as the default encoding.
 (set-selection-coding-system 'utf-8)
 #+END_SRC
 
-*** IDO Mode
-Use =ido-mode= everywhere.
-
-#+BEGIN_SRC emacs-lisp
-(ido-mode 1)
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-#+END_SRC
-
 ** UI Preferences
 *** Tweak Window
 I don’t want GUI stuff showing up.
@@ -179,7 +170,30 @@ moved to the specific mode section.
                            (buffer-face-mode)))
 #+END_SRC
 
-** Org-mode
+** Helm
+I started using /Helm/ instead of Ido. This configuration is still
+quite incomplete though.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm
+  :bind (
+    ("M-x" . helm-M-x)
+    ("C-x C-f" . helm-find-files)
+    ("C-x b" . helm-mini)
+
+    ;; Helm find-files
+    (:map helm-find-files-map
+      ("C-d" . helm-ff-persistent-delete))
+    (:map helm-buffer-map
+      ("C-d" . helm-buffer-run-kill-persistent)))
+  :config
+  (helm-mode 1)
+
+  ;; Helm variables
+  (helm-autoresize-mode t))
+#+END_SRC
+
+** ORG-mode
 *** Keybindings
 Bind a few handy keys.
 

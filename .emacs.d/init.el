@@ -16,7 +16,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (markdown-mode ## evil-magit magit evil-org evil kaolin-themes auto-compile use-package)))
+    (helm markdown-mode ## evil-magit magit evil-org evil kaolin-themes auto-compile use-package)))
  '(scheme-program-name "mit-scheme"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
