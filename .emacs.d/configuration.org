@@ -27,7 +27,7 @@ Add the =resources= directory to =load-path=.
 #+END_SRC
 
 ** Basic Configuration
-*** Setup Sensible DefaultS
+*** Setup Sensible Defaults
 **** Open Files from Home
 When opening a file, start searching at user’s home directory.
 
@@ -256,21 +256,6 @@ Confluence wiki pages outside of Confluence itself.
 (require 'ox-confluence)
 #+END_SRC
 
-** Markdown Mode
-Autoload the major mode =markdown-mode= for =.md= and =.markdown=
-extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for
-=README.md= files.
-
-#+BEGIN_SRC emacs-lisp
-(use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-#+END_SRC
-
 ** Evil Mode
 Use =evil-mode=.
 
@@ -395,4 +380,29 @@ Integration with a Clojure REPL.
   (setq cider-repl-history-file "~/.emacs.d/cider-history")
   ;; Wrap when navigating history
   (setq cider-repl-wrap-history t))
+#+END_SRC
+*** Markdown
+Autoload the major mode =markdown-mode= for =.md= and =.markdown=
+extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for
+=README.md= files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+#+END_SRC
+
+*** Yaml
+Load =yaml-mode= for YAML file extensions.
+
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :ensure t
+  :commands (yaml-mode)
+  :mode (("\\.yml\\'" . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)))
 #+END_SRC
