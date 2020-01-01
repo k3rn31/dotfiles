@@ -52,7 +52,7 @@ collection.
 Don’t assume that sentences should have two spaces after periods.
 
 #+BEGIN_SRC emacs-lisp
-(setq sentence-end-souble-space nil)
+(setq sentence-end-double-space nil)
 #+END_SRC
 
 **** Overwrite Selected Text
@@ -94,7 +94,7 @@ I want my default line length to be 80 columns.
 #+END_SRC
 
 **** Debug on Error
-Errors should produce backtraces when they occur.
+Errors should produce back traces when they occur.
 
 #+BEGIN_SRC emacs-lisp
 (setq debug-on-error t)
@@ -269,7 +269,7 @@ Use =evil-mode=.
   (evil-mode 1))
 #+END_SRC
 
-Use =evil-collection= to add a set of keybindings for =evil-mode=.
+Use =evil-collection= to add a set of key-bindings for =evil-mode=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil-collection
@@ -295,9 +295,9 @@ Use =magit=, a lovely porcelain to work with Git within Emacs.
 
 I tweak a few things:
 - Bring up the status menu with =C-x g=.
-- Use =evil-mode= keybindings with =magit=.
+- Use =evil-mode= key-bindings with =magit=.
 - Highlight commit test in summary lime beyond 55 characters.
-- Start in instert mode when writing a commit message.
+- Start in insert mode when writing a commit message.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -382,7 +382,7 @@ Integration with a Clojure REPL.
   (setq cider-repl-wrap-history t))
 #+END_SRC
 *** Markdown
-Autoload the major mode =markdown-mode= for =.md= and =.markdown=
+Auto-load the major mode =markdown-mode= for =.md= and =.markdown=
 extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for
 =README.md= files.
 
