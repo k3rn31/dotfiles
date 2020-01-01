@@ -151,23 +151,10 @@ I want my default font to be Inconsolata.
 (cond
  ((find-font (font-spec :name "Inconsolata"))
   (set-frame-font "Inconsolata 11"))
+ ((find-font (font-spec :name "Fira Mono"))
+  (set-frame-font "Fira Mono 11"))
  ((find-font (font-spec :name "Consolas"))
   (set-frame-font "Consolas 11")))
-#+END_SRC
-
-**** Set Fonts for Specific Modes
-Here I set some fonts for specific modes, but probably this should be
-moved to the specific mode section.
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'Info-mode-hook (lambda ()
-                           (setq buffer-face-mode-face
-                           '(:family "Fira Mono" :height 110))
-                           (buffer-face-mode)))
-(add-hook 'org-mode-hook (lambda ()
-                           (setq buffer-face-mode-face
-                           '(:family "Fira Mono" :height 110))
-                           (buffer-face-mode)))
 #+END_SRC
 
 ** Helm
