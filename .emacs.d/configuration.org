@@ -194,6 +194,13 @@ quite incomplete though.
 #+END_SRC
 
 ** ORG-mode
+*** Basic Setup
+Set an empty list for my Org Capture Templates.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates '())
+#+END_SRC
+
 *** Keybindings
 Bind a few handy keys.
 
@@ -217,7 +224,7 @@ Setup agenda files with /index/, /gtd/ and /tickler/.
 Refile targets are /gtd/, /someday/ and /tickler/.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 2)
+(setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
                            ("~/gtd/someday.org" :level . 1)
                            ("~/gtd/tickler.org" :maxlevel . 2)))
 #+END_SRC
@@ -232,12 +239,12 @@ was finished.
 Setup capture templates.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-capture-templates '(("t" "Todo [inbox]" entry
-                              (file+headline "~/gtd/inbox.org" "Inbox")
-                              "* TODO %i%?")
-                              ("T" "Tickler" entry
-                              (file+headline "~/gtd/tickler.org" "Tickler")
-                              "* TODO %i%? \n %T")))
+(add-to-list 'org-capture-templates '("t" "Todo [inbox]" entry
+                                      (file+headline "~/gtd/inbox.org" "Tasks")
+                                      "* TODO %i%?"))
+(add-to-list 'org-capture-templates '("T" "Tickler" entry
+                                      (file+headline "~/gtd/tickler.org" "Tickler")
+                                      "* TODO %i%? \n %T"))
 #+END_SRC
 
 Customize the sequence of TODOs statuses.
@@ -245,6 +252,17 @@ Customize the sequence of TODOs statuses.
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|"
                                     "DONE(d)" "CANCELLED(c)")))
+#+END_SRC
+
+*** Grocery List
+This is my grocery list template. I like to add a TODO item with with
+the current /inactive/ timestamp and a series of checkbox.
+I store my list in a Dropbox folder and use it on the go via Orgzly.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'org-capture-templates '("g" "Grocery" entry
+                                      (file+headline "~/Dropbox/org/grocery.org" "Grocery")
+                                      "* TODO Spesa del %u [/]\n- [ ] %?"))
 #+END_SRC
 
 *** Exporters From Contrib
