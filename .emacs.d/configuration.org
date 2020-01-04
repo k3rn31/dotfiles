@@ -414,3 +414,14 @@ Load =yaml-mode= for YAML file extensions.
   :mode (("\\.yml\\'" . yaml-mode)
          ("\\.yaml\\'" . yaml-mode)))
 #+END_SRC
+
+*** Cucumber (Gherkin)
+I want ~feature-mode~ to be loaded when I open Cucumber /feature/
+files written in Gherkin.
+
+#+BEGIN_SRC emacs-lisp
+(use-package feature-mode
+  :ensure t
+  :commands (feature-mode)
+  :mode (("\\.feature\\'" . feature-mode)))
+#+END_SRC

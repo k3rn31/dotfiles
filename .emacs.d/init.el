@@ -17,7 +17,7 @@
  '(org-export-backends (quote (ascii html icalendar latex md odt confluence)))
  '(package-selected-packages
    (quote
-    (evil-magit yaml-mode markdown-mode clojure-mode-extra-font-locking cider clojure-mode paredit rainbow-delimiters magit evil-org evil-collection evil helm zenburn-theme auto-compile use-package))))
+    (feature-mode evil-magit yaml-mode markdown-mode clojure-mode-extra-font-locking cider clojure-mode paredit rainbow-delimiters magit evil-org evil-collection evil helm zenburn-theme auto-compile use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
