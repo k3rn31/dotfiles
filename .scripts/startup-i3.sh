@@ -13,6 +13,9 @@ dunst &
 # Start auto-mounter
 udiskie --tray &
 
+# Start Dropbox
+dropbox &
+
 # Start unclutter to hide mouse cursor
 unclutter &
 
