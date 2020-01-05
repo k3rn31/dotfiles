@@ -312,6 +312,19 @@ I tweak a few things:
   (add-hook 'with-editor-mode-hook 'evil-insert-state))
 #+END_SRC
 
+Force me to write clean and easy to read commit messages.
+
+#+BEGIN_SRC emacs-lisp
+(use-package git-commit
+  :after magit
+  :custom
+  (git-commit-fill-column 72)
+  (git-commit-summary-max-length 50)
+  (git-commit-style-convention-checks
+    '(non-empty-second-line
+      overlong-summary-line)))
+#+END_SRC
+
 ** Writing Prose
 *** Wrap Paragraphs Automatically
 ~visual-fill-column~ is a minor mode that mimicst the effect of ~fill-column~ in ~visual-line-mode~. Instead of wrapping lines at the window edge, it wraps at ~fill-column~.
