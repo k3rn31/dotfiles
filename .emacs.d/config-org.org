@@ -1,7 +1,6 @@
 #+TITLE: Config Org
 #+OPTIONS: toc:2 num:nil ^:nil
 
-* Org-mode
 ** Basic Setup
 Set an empty list for my Org Capture Templates.
 #+BEGIN_SRC emacs-lisp

@@ -1,7 +1,6 @@
 #+TITLE: Config Helm
 #+OPTIONS: toc:2 num:nil ^:nil
 
-* Helm
 I started using /Helm/ instead of Ido. This configuration is still quite incomplete though.
 #+BEGIN_SRC emacs-lisp
 (use-package helm

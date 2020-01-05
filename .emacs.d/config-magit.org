@@ -1,7 +1,6 @@
 #+TITLE: Config Magit
 #+OPTIONS: toc:2 num:nil ^:nil
 
-* Magit
 Use ~magit~, a lovely porcelain to work with Git within Emacs.
 
 I tweak a few things:

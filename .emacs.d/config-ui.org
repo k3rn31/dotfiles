@@ -1,7 +1,6 @@
 #+TITLE: Config UI
 #+OPTIONS: toc:2 num:nil ^:nil
 
-* Config UI
 ** Quiet Startup
 Remove /splash screen/ and clear the scratch buffer.
 #+BEGIN_SRC emacs-lisp

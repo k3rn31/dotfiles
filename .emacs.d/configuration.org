@@ -1,7 +1,6 @@
 #+TITLE: Emacs Configuration
 #+OPTIONS: toc:2 num:nil ^:nil
 
-* Emacs Configuration
 This is a /Literate Programming/ configuration for my Emacs installation.
 
 ** Structure

@@ -1,7 +1,6 @@
 #+TITLE: Config Misc
 #+OPTIONS: toc:2 num:nil ^:nil
 
-* Basic Configuration
 ** Open Files from Home
 When opening a file, start searching at user’s home directory.
 #+BEGIN_SRC emacs-lisp

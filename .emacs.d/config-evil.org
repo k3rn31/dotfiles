@@ -1,7 +1,6 @@
 #+TITLE: Config Evil
 #+OPTIONS: toc:2 num:nil ^:nil
 
-* Config Evil
 Use ~evil-mode~.
 #+BEGIN_SRC emacs-lisp
 (use-package evil
