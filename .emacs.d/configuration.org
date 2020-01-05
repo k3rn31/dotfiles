@@ -322,12 +322,27 @@ I tweak a few things:
 
 ** Writing Prose
 *** Wrap Paragraphs Automatically
-When writing prose I want to automatically wrap paragraphs.
+~visual-fill-column~ is a minor mode that mimicst the effect of ~fill-column~ in ~visual-line-mode~. Instead of wrapping lines at the window edge, it wraps at ~fill-column~.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook 'auto-fill-mode)
-(add-hook 'text-mode-hook 'auto-fill-mode)
-(add-hook 'markdown-mode-hook 'auto-fill-mode)
+(use-package visual-fill-column
+  :init
+  (dolist (hook '(visual-line-mode-hook))
+    (add-hook hook #'visual-fill-column-mode))
+  :config
+  (setq split-window-preferred-function
+    #'visual-fill-column-split-window-sensibly)
+  (advice-add 'text-scale-adjust :after
+    #'visual-fill-column-adjust))
+#+END_SRC
+
+When writing prose I want to automatically wrap paragraphs. Set ~visual-line-mode~ for modes that benefit from it.
+
+#+BEGIN_SRC emacs-lisp
+(dolist (prose-mode-hooks '(org-mode-hook
+                            text-mode-hook
+                            markdown-mode-hook))
+        (add-hook prose-mode-hooks #'visual-line-mode))
 #+END_SRC
 
 *** Enable =electric-quote-mode=
