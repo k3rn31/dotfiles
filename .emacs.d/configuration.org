@@ -1,10 +1,8 @@
 * Emacs Configuration
 ** Package configuration
-I use =use-packages= which is setup in =init.el= to ensure that it is
-installed right away.
+I use =use-packages= which is setup in =init.el= to ensure that it is installed right away.
 
-Let’s make sure that =use-packages= will install packages if they are
-not yet available.
+Let’s make sure that =use-packages= will install packages if they are not yet available.
 
 #+BEGIN_SRC emacs-lisp
 (require 'use-package-ensure)
@@ -36,8 +34,7 @@ When opening a file, start searching at user’s home directory.
 #+END_SRC
 
 **** Increase GC threshold
-Allow 20MB of memory (instead of 0.76MB) before calling garbage
-collection.
+Allow 20MB of memory (instead of 0.76MB) before calling garbage collection.
 
 #+BEGIN_SRC emacs-lisp
 (setq gc-cons-threshold 20000000)
@@ -56,8 +53,7 @@ Don’t assume that sentences should have two spaces after periods.
 #+END_SRC
 
 **** Overwrite Selected Text
-If some text is selected and you write something, that should replace
-the selected text.
+If some text is selected and you write something, that should replace the selected text.
 
 #+BEGIN_SRC emacs-lisp
 (setq delete-selection-mode t)
@@ -145,8 +141,7 @@ I’m currently using /zenburn/ theme.
 #+END_SRC
 
 *** Set Default Font and Font Sizes
-I’ve yet to decide which is my favourite font, for now I’ll stick with
-/Fira Mono/, but this may change soon.
+I’ve yet to decide which is my favourite font, for now I’ll stick with /Fira Mono/, but this may change soon.
 
 TODO: Make the font size change according to screen size.
 
@@ -161,8 +156,7 @@ TODO: Make the font size change according to screen size.
 #+END_SRC
 
 ** Helm
-I started using /Helm/ instead of Ido. This configuration is still
-quite incomplete though.
+I started using /Helm/ instead of Ido. This configuration is still quite incomplete though.
 
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -219,8 +213,7 @@ Refile targets are /gtd/, /someday/ and /tickler/.
                            ("~/gtd/tickler.org" :maxlevel . 2)))
 #+END_SRC
 
-The most basic logging is to keep track of /when/ a certain TODO item
-was finished.
+The most basic logging is to keep track of /when/ a certain TODO item was finished.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-log-done 'time)
@@ -245,8 +238,7 @@ Customize the sequence of TODOs statuses.
 #+END_SRC
 
 *** Grocery List
-This is my grocery list template. I like to add a TODO item with with
-the current /inactive/ timestamp and a series of checkbox.
+This is my grocery list template. I like to add a TODO item with with the current /inactive/ timestamp and a series of checkbox.
 I store my list in a Dropbox folder and use it on the go via Orgzly.
 
 #+BEGIN_SRC emacs-lisp
@@ -257,8 +249,7 @@ I store my list in a Dropbox folder and use it on the go via Orgzly.
 
 *** Exporters From Contrib
 **** Confluence
-Require =ox-confluence= to export framework, since I like to write my
-Confluence wiki pages outside of Confluence itself.
+Require =ox-confluence= to export framework, since I like to write my Confluence wiki pages outside of Confluence itself.
 
 #+BEGIN_SRC emacs-lisp
 (require 'ox-confluence)
@@ -293,7 +284,8 @@ Use =evil-mode= with Org agendas.
   :after (:all evil org)
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook (lambda () (evil-org-set-key-theme)))
+  (add-hook 'evil-org-mode-hook (lambda ()
+                                   (evil-org-set-key-theme)))
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 #+END_SRC
@@ -389,8 +381,8 @@ Integration with a Clojure REPL.
 #+BEGIN_SRC emacs-lisp
 (use-package cider
   :after paredit
-  ;; provides minibuffer documentation for the code you’re typing into repl
-  ;; and enable paredit in REPL
+  ;; provides minibuffer documentation for the code you’re
+  ;; typing into repl and enable paredit in REPL
   :hook ((cider-mode . eldoc-mode)
          (cider-mode . paredit-mode))
   :config
@@ -406,8 +398,7 @@ Integration with a Clojure REPL.
 #+END_SRC
 *** Markdown
 Auto-load the major mode =markdown-mode= for =.md= and =.markdown=
-extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for
-=README.md= files.
+extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for =README.md= files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
