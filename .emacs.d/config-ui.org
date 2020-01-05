@@ -1,0 +1,54 @@
+#+TITLE: Config UI
+#+OPTIONS: toc:2 num:nil ^:nil
+
+* Config UI
+** Quiet Startup
+Remove /splash screen/ and clear the scratch buffer.
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area t
+      initial-scratch-message nil)
+#+END_SRC
+
+** Hide window "Stuff"
+I don’t want GUI stuff showing up.
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+END_SRC
+
+** Show Line Numbers
+Display line numbers by default.
+#+BEGIN_SRC emacs-lisp
+(when (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode))
+#+END_SRC
+
+** Flash Screen Instead of Bell
+In my office environment I prefer to be quiet.
+#+BEGIN_SRC emacs-lisp
+(setq visible-bell t)
+#+END_SRC
+
+** Load a Theme
+I’m currently using /zenburn/ theme.
+#+BEGIN_SRC emacs-lisp
+(use-package zenburn-theme
+  :config
+  (load-theme 'zenburn t))
+#+END_SRC
+
+** Set Default Font and Font Sizes
+I’ve yet to decide which is my favourite font, for now I’ll stick with /Fira Mono/, but this may change soon.
+
+TODO: Make the font size change according to screen size.
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((find-font (font-spec :name "Fira Mono"))
+  (set-frame-font (font-spec :name "Fira Mono" :size 13)))
+ ((find-font (font-spec :name "Inconsolata"))
+  (set-frame-font (font-spec :name "Inconsolata" :size 14)))
+ ((find-font (font-spec :name "Consolas"))
+  (set-frame-font (font-spec :name "Consolas" :size 13))))
+#+END_SRC

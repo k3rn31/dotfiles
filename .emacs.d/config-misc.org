@@ -1,0 +1,65 @@
+#+TITLE: Config Misc
+#+OPTIONS: toc:2 num:nil ^:nil
+
+* Basic Configuration
+** Open Files from Home
+When opening a file, start searching at user’s home directory.
+#+BEGIN_SRC emacs-lisp
+(setq default-directory "~/")
+#+END_SRC
+
+** Increase GC threshold
+Allow 20MB of memory (instead of 0.76MB) before calling garbage collection.
+#+BEGIN_SRC emacs-lisp
+(setq gc-cons-threshold 20000000)
+#+END_SRC
+
+** Delete Trailing Whitespace
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+** Single Space After Periods
+Don’t assume that sentences should have two spaces after periods.
+#+BEGIN_SRC emacs-lisp
+(setq sentence-end-double-space nil)
+#+END_SRC
+
+** Overwrite Selected Text
+If some text is selected and you write something, that should replace the selected text.
+#+BEGIN_SRC emacs-lisp
+(setq delete-selection-mode t)
+#+END_SRC
+
+** Ensure That Files End With Newline
+Append a newline if it doesn’t exist upon saving.
+#+BEGIN_SRC emacs-lisp
+(setq require-final-newline t)
+#+END_SRC
+
+** Set Default Line Length
+I want my default line length to be 80 columns.
+#+BEGIN_SRC emacs-lisp
+(setq fill-column 80)
+#+END_SRC
+
+** Debug on Error
+Errors should produce back traces when they occur.
+#+BEGIN_SRC emacs-lisp
+(setq debug-on-error t)
+#+END_SRC
+
+** Always Indent With Spaces
+Tabs are evil, never use tabs.
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
+** Character Encoding
+Set UTF-8 as the default encoding.
+#+BEGIN_SRC emacs-lisp
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-language-environment 'utf-8)
+(set-selection-coding-system 'utf-8)
+#+END_SRC

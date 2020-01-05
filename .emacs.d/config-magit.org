@@ -1,0 +1,36 @@
+#+TITLE: Config Magit
+#+OPTIONS: toc:2 num:nil ^:nil
+
+* Magit
+Use ~magit~, a lovely porcelain to work with Git within Emacs.
+
+I tweak a few things:
+- Bring up the status menu with ~C-x g~.
+- Use ~evil-mode~ key-bindings with ~magit~.
+- Highlight commit test in summary lime beyond 55 characters.
+- Start in insert mode when writing a commit message.
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :bind
+  ("C-x g" . magit-status)
+  ("C-x M-g" . magit-dispatch)
+  :config
+  (use-package evil-magit
+    :after evil)
+  (use-package with-editor)
+  (setq git-commit-summary-max-length 55)
+  (add-hook 'with-editor-mode-hook 'evil-insert-state))
+#+END_SRC
+
+Force me to write clean and easy to read commit messages.
+#+BEGIN_SRC emacs-lisp
+(use-package git-commit
+  :after magit
+  :custom
+  (git-commit-fill-column 72)
+  (git-commit-summary-max-length 50)
+  (git-commit-style-convention-checks
+    '(non-empty-second-line
+      overlong-summary-line)))
+#+END_SRC

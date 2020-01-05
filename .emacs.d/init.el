@@ -1,13 +1,8 @@
-;; Configure package.el to include MELPA.
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-(package-initialize)
-
-;; Ensure that use-package is installed.
-(when (not (package-installed-p 'use-package))
-  (package-refresh-contents)
-  (package-install 'use-package))
+;;; init.el -*- lexical-binding: t; -*-
+;;; init.el --- Where all the magic begins
+;;
+;; This is the first thing that gets loaded
+;;
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -17,7 +12,7 @@
  '(org-export-backends (quote (ascii html icalendar latex md odt confluence)))
  '(package-selected-packages
    (quote
-    (feature-mode evil-magit yaml-mode markdown-mode clojure-mode-extra-font-locking cider clojure-mode paredit rainbow-delimiters magit evil-org evil-collection evil helm zenburn-theme auto-compile use-package))))
+    (visual-fill-column feature-mode evil-magit yaml-mode markdown-mode clojure-mode-extra-font-locking cider clojure-mode paredit rainbow-delimiters magit evil-org evil-collection evil helm zenburn-theme auto-compile use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,4 +20,9 @@
  ;; If there is more than one, they won't work right.
  )
 
-(org-babel-load-file "~/.emacs.d/configuration.org")
+;; Set a variable holding the current configuration directory
+(setq config-dir (file-name-directory
+                  (or load-file-name (buffer-file-name))))
+
+;; Load the main configuration file
+(org-babel-load-file (expand-file-name "configuration.org" config-dir))

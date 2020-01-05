@@ -1,331 +1,89 @@
+#+TITLE: Emacs Configuration
+#+OPTIONS: toc:2 num:nil ^:nil
+
 * Emacs Configuration
-** Package configuration
-I use =use-packages= which is setup in =init.el= to ensure that it is installed right away.
+This is a /Literate Programming/ configuration for my Emacs installation.
+
+** Structure
+Everything starts in ~init.el~ which is the entry point for every Emacs configuration. The main purpose of ~init.el~ is to load this ~configuration.org~ file, compile it in a ~configuration.el~, which, in turn, loads all the other ~.org~ files in the repository.
+
+** Startup
+Here everything starts.
+
+*** Setup Load Path
+Add the =resources= directory to =load-path=.
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path (concat config-dir "/resources/"))
+#+END_SRC
+
+*** Package configuration
+Initialize ELPA archive repositories.
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq package-archives
+   '(("gnu"         . "http://elpa.gnu.org/packages/")
+     ("org"         . "http://orgmode.org/elpa/")
+     ("melpa"       . "http://melpa.org/packages/")
+     ("marmalade"   . "http://marmalade-repo.org/packages/")))
+(package-initialize)
+#+END_SRC
+
+Ensure that ~use-packages~ is initialized.
+#+BEGIN_SRC emacs-lisp
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+#+END_SRC
 
 Let’s make sure that =use-packages= will install packages if they are not yet available.
-
 #+BEGIN_SRC emacs-lisp
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 #+END_SRC
 
 Always compile packages and use the newest version available.
-
 #+BEGIN_SRC emacs-lisp
 (use-package auto-compile
   :config (auto-compile-on-load-mode))
 (setq load-prefer-newer t)
 #+END_SRC
 
-** Setup Load Path
-Add the =resources= directory to =load-path=.
-
+*** Function for loading configs
+This function is used to load the configuration files.
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/resources/")
+(defun load-config-file(file)
+  "Function used to load *.org configuration files."
+  (org-babel-load-file (expand-file-name file config-dir)))
 #+END_SRC
 
-** Basic Configuration
-*** Setup Sensible Defaults
-**** Open Files from Home
-When opening a file, start searching at user’s home directory.
-
-#+BEGIN_SRC emacs-lisp
-(setq default-directory "~/")
-#+END_SRC
-
-**** Increase GC threshold
-Allow 20MB of memory (instead of 0.76MB) before calling garbage collection.
-
-#+BEGIN_SRC emacs-lisp
-(setq gc-cons-threshold 20000000)
-#+END_SRC
-
-**** Delete Trailing Whitespace
-#+BEGIN_SRC emacs-lisp
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+END_SRC
-
-**** Single Space After Periods
-Don’t assume that sentences should have two spaces after periods.
-
-#+BEGIN_SRC emacs-lisp
-(setq sentence-end-double-space nil)
-#+END_SRC
-
-**** Overwrite Selected Text
-If some text is selected and you write something, that should replace the selected text.
-
-#+BEGIN_SRC emacs-lisp
-(setq delete-selection-mode t)
-#+END_SRC
-
-**** Ensure That Files End With Newline
-Append a newline if it doesn’t exist upon saving.
-
-#+BEGIN_SRC emacs-lisp
-(setq require-final-newline t)
-#+END_SRC
-
-**** Quiet Startup
-Remove /splash screen/ and clear the scratch buffer.
-
-#+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t
-      inhibit-startup-echo-area t
-      initial-scratch-message nil)
-#+END_SRC
-
-**** Flash Screen Instead of Bell
-In my office environment I prefer to be quiet.
-
-#+BEGIN_SRC emacs-lisp
-(setq visible-bell t)
-#+END_SRC
-
-**** Set Default Line Length
-I want my default line length to be 80 columns.
-
-#+BEGIN_SRC emacs-lisp
-(setq fill-column 80)
-#+END_SRC
-
-**** Debug on Error
-Errors should produce back traces when they occur.
-
-#+BEGIN_SRC emacs-lisp
-(setq debug-on-error t)
-#+END_SRC
-
-**** Always Indent With Spaces
-Tabs are evil, never use tabs.
-
-#+BEGIN_SRC emacs-lisp
-(setq-default indent-tabs-mode nil)
-#+END_SRC
-
-**** Character Encoding
-Set UTF-8 as the default encoding.
-
-#+BEGIN_SRC emacs-lisp
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-language-environment 'utf-8)
-(set-selection-coding-system 'utf-8)
-#+END_SRC
-
-** UI Preferences
-*** Tweak Window
-I don’t want GUI stuff showing up.
-
-#+BEGIN_SRC emacs-lisp
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-#+END_SRC
-
-Display line numbers by default.
-
-#+BEGIN_SRC emacs-lisp
-(when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode))
-#+END_SRC
-
-*** Load a Theme
-I’m currently using /zenburn/ theme.
-
-#+BEGIN_SRC emacs-lisp
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
-#+END_SRC
-
-*** Set Default Font and Font Sizes
-I’ve yet to decide which is my favourite font, for now I’ll stick with /Fira Mono/, but this may change soon.
-
-TODO: Make the font size change according to screen size.
-
-#+BEGIN_SRC emacs-lisp
-(cond
- ((find-font (font-spec :name "Fira Mono"))
-  (set-frame-font (font-spec :name "Fira Mono" :size 13)))
- ((find-font (font-spec :name "Inconsolata"))
-  (set-frame-font (font-spec :name "Inconsolata" :size 14)))
- ((find-font (font-spec :name "Consolas"))
-  (set-frame-font (font-spec :name "Consolas" :size 13))))
-#+END_SRC
-
-** Helm
-I started using /Helm/ instead of Ido. This configuration is still quite incomplete though.
-
-#+BEGIN_SRC emacs-lisp
-(use-package helm
-  :bind (
-    ("M-x" . helm-M-x)
-    ("C-x C-f" . helm-find-files)
-    ("C-x b" . helm-mini)
-
-    ;; Helm find-files
-    (:map helm-find-files-map
-      ("C-d" . helm-ff-persistent-delete))
-    (:map helm-buffer-map
-      ("C-d" . helm-buffer-run-kill-persistent)))
-  :config
-  (helm-mode 1)
-
-  ;; Helm variables
-  (helm-autoresize-mode t))
-#+END_SRC
-
-** ORG-mode
-*** Basic Setup
-Set an empty list for my Org Capture Templates.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-capture-templates '())
-#+END_SRC
-
-*** Keybindings
-Bind a few handy keys.
-
-#+BEGIN_SRC emacs-lisp
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(define-key global-map "\C-cc" 'org-capture)
-#+END_SRC
-
-*** GTD Setup
-The GTD part of this config is heavily inspired by [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Org-mode GTD]].
-
-Setup agenda files with /index/, /gtd/ and /tickler/.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-agenda-files '("~/gtd/inbox.org"
-                         "~/gtd/gtd.org"
-                         "~/gtd/tickler.org"))
-#+END_SRC
-
-Refile targets are /gtd/, /someday/ and /tickler/.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
-                           ("~/gtd/someday.org" :level . 1)
-                           ("~/gtd/tickler.org" :maxlevel . 2)))
-#+END_SRC
-
-The most basic logging is to keep track of /when/ a certain TODO item was finished.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-log-done 'time)
-#+END_SRC
-
-Setup capture templates.
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'org-capture-templates '("t" "Todo [inbox]" entry
-                                      (file+headline "~/gtd/inbox.org" "Tasks")
-                                      "* TODO %i%?"))
-(add-to-list 'org-capture-templates '("T" "Tickler" entry
-                                      (file+headline "~/gtd/tickler.org" "Tickler")
-                                      "* TODO %i%? \n %T"))
-#+END_SRC
-
-Customize the sequence of TODOs statuses.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|"
-                                    "DONE(d)" "CANCELLED(c)")))
-#+END_SRC
-
-*** Grocery List
-This is my grocery list template. I like to add a TODO item with with the current /inactive/ timestamp and a series of checkbox.
-I store my list in a Dropbox folder and use it on the go via Orgzly.
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'org-capture-templates '("g" "Grocery" entry
-                                      (file+headline "~/Dropbox/org/grocery.org" "Grocery")
-                                      "* TODO Spesa del %u [/]\n- [ ] %?"))
-#+END_SRC
-
-*** Exporters From Contrib
-**** Confluence
-Require =ox-confluence= to export framework, since I like to write my Confluence wiki pages outside of Confluence itself.
-
-#+BEGIN_SRC emacs-lisp
-(require 'ox-confluence)
-#+END_SRC
-
-** Evil Mode
-Use =evil-mode=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  :config
-  (evil-mode 1))
-#+END_SRC
-
-Use =evil-collection= to add a set of key-bindings for =evil-mode=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-collection
-  :after evil
-  :ensure t
-  :config
-  (evil-collection-init))
-#+END_SRC
-
-Use =evil-mode= with Org agendas.
-#+BEGIN_SRC emacs-lisp
-(use-package evil-org
-  :after (:all evil org)
-  :config
-  (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook (lambda ()
-                                   (evil-org-set-key-theme)))
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
-#+END_SRC
-
-** Magit
-Use =magit=, a lovely porcelain to work with Git within Emacs.
-
-I tweak a few things:
-- Bring up the status menu with =C-x g=.
-- Use =evil-mode= key-bindings with =magit=.
-- Highlight commit test in summary lime beyond 55 characters.
-- Start in insert mode when writing a commit message.
-
-#+BEGIN_SRC emacs-lisp
-(use-package magit
-  :bind
-  ("C-x g" . magit-status)
-  ("C-x M-g" . magit-dispatch)
-  :config
-  (use-package evil-magit
-    :after evil)
-  (use-package with-editor)
-  (setq git-commit-summary-max-length 55)
-  (add-hook 'with-editor-mode-hook 'evil-insert-state))
-#+END_SRC
-
-Force me to write clean and easy to read commit messages.
-
-#+BEGIN_SRC emacs-lisp
-(use-package git-commit
-  :after magit
-  :custom
-  (git-commit-fill-column 72)
-  (git-commit-summary-max-length 50)
-  (git-commit-style-convention-checks
-    '(non-empty-second-line
-      overlong-summary-line)))
-#+END_SRC
+*** Load Config Files
+- Miscellaneous settings in [[file:config-misc.org][config-misc]]
+  #+BEGIN_SRC emacs-lisp
+  (load-config-file "config-misc.org")
+  #+END_SRC
+- UI Preferences settings in [[file:config-ui.org][config-ui]]
+  #+BEGIN_SRC emacs-lisp
+  (load-config-file "config-ui.org")
+  #+END_SRC
+- /Org-mode/ configuration in [[file:config-org.org][config org]]
+  #+BEGIN_SRC emacs-lisp
+  (load-config-file "config-org.org")
+  #+END_SRC
+- /Helm/ configuration in [[file:config-helm.org][config helm]]
+  #+BEGIN_SRC emacs-lisp
+  (load-config-file "config-helm.org")
+  #+END_SRC
+- /Evil/ configuration in [[file:config-evil.org][config evil]]
+  #+BEGIN_SRC emacs-lisp
+  (load-config-file "config-evil.org")
+  #+END_SRC
+- /Magit/ configuration in [[file:config-magit.org][config magit]]
+  #+BEGIN_SRC emacs-lisp
+  (load-config-file "config-magit.org")
+  #+END_SRC
 
 ** Writing Prose
+TODO: Find a better place to put this.
 *** Wrap Paragraphs Automatically
 ~visual-fill-column~ is a minor mode that mimicst the effect of ~fill-column~ in ~visual-line-mode~. Instead of wrapping lines at the window edge, it wraps at ~fill-column~.
 
@@ -359,6 +117,8 @@ I want =electric-quote-mode= enabled by default when writing prose.
 #+END_SRC
 
 ** Languages
+TODO: This should be split in multiple language specific config files.
+
 Add colorful parenthesis matching in all programming modes.
 
 #+BEGIN_SRC emacs-lisp
@@ -415,7 +175,6 @@ extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for =README.md= fi
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
-  :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -428,7 +187,6 @@ Load =yaml-mode= for YAML file extensions.
 
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
-  :ensure t
   :commands (yaml-mode)
   :mode (("\\.yml\\'" . yaml-mode)
          ("\\.yaml\\'" . yaml-mode)))
@@ -440,7 +198,6 @@ files written in Gherkin.
 
 #+BEGIN_SRC emacs-lisp
 (use-package feature-mode
-  :ensure t
   :commands (feature-mode)
   :mode (("\\.feature\\'" . feature-mode)))
 #+END_SRC

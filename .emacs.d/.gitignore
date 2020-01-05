@@ -1,7 +1,9 @@
 auto-save-list/
 cider-history
 configuration.el
+config-*.el
 elpa/
 *.last
 transient/
 recentf
+network-security.data
