@@ -63,7 +63,7 @@ case $option in
     ln -sfnv "$PWD/.config/picom" ~/.config/picom
     ln -sfnv "$PWD/.config/qutebrowser" ~/.config/qutebrowser
     ln -sfnv "$PWD/.config/zathura" ~/.config/zathura
-    ln -sfnv "$PWD/st" ~/.config/st
+    ln -sfnv "$PWD/st" ~/builds/st
     ln -sfnv "$PWD/.weechat" ~/.weechat
     ;;
 
