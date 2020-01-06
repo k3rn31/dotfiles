@@ -6,7 +6,7 @@ This is a /Literate Programming/ configuration for my Emacs installation.
 
 ** Structure
 
-Everything starts in =init.el= which is the entry point for every Emacs configuration. The main purpose of =init.el= is to load this =configuration.org= file, compile it in a =configuration.el=, which, in turn, loads all the other =.org= files in the repository.
+Everything starts in [[file:init.el][init.el]] which is the entry point for every Emacs configuration. The main purpose of =init.el= is to load this =configuration.org= file, compile it in a =configuration.el=, which, in turn, loads all the other =.org= files in the repository.
 
 * Implementation
 
