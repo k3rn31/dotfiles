@@ -13,7 +13,7 @@ echo -en "\u001b[32;1m ==> \u001b[0m"
 read -r option
 
 case $option in
-    
+
 # Emacs setup
 "1")echo -e "\u001b[7m Setting up Emacs symlinks... \u001b[0m"
     echo -e "\u001b[33;1m Backup existing files? (y/n) \u001b[0m"
@@ -57,12 +57,12 @@ case $option in
     ln -sfnv "$PWD/.bash_aliases" ~/.bash_aliases
     ln -sfnv "$PWD/.xprofile" ~/.xprofile
     ln -sfnv "$PWD/.scripts" ~/.scripts
-    ln -sfnv "$PWD/dunst" ~/.config/dunst
-    ln -sfnv "$PWD/i3" ~/.config/i3
-    ln -sfnv "$PWD/i3blocks" ~/.config/i3blocks
-    ln -sfnv "$PWD/picom" ~/.config/picom
-    ln -sfnv "$PWD/qutebrowser" ~/.config/qutebrowser
-    ln -sfnv "$PWD/zathura" ~/.config/zathura
+    ln -sfnv "$PWD/.config/dunst" ~/.config/dunst
+    ln -sfnv "$PWD/.config/i3" ~/.config/i3
+    ln -sfnv "$PWD/.config/i3blocks" ~/.config/i3blocks
+    ln -sfnv "$PWD/.config/picom" ~/.config/picom
+    ln -sfnv "$PWD/.config/qutebrowser" ~/.config/qutebrowser
+    ln -sfnv "$PWD/.config/zathura" ~/.config/zathura
     ln -sfnv "$PWD/st" ~/.config/st
     ln -sfnv "$PWD/.weechat" ~/.weechat
     ;;
@@ -74,7 +74,7 @@ case $option in
 *)echo -e "\u001b[31;1m Invalid option entered! \u001b[0m"
     exit 1
     ;;
-	   
+
 esac
 
 exit 0
