@@ -1,96 +1,121 @@
 #+TITLE: Config Misc
 #+OPTIONS: toc:2 num:nil ^:nil
 
+This is part of [[file:configuration.org][configuration.org]]
+
 ** Open Files from Home
+
 When opening a file, start searching at user’s home directory.
+
 #+BEGIN_SRC emacs-lisp
-(setq default-directory "~/")
+  (setq default-directory "~/")
 #+END_SRC
 
 ** Increase GC threshold
+
 Allow 20MB of memory (instead of 0.76MB) before calling garbage collection.
+
 #+BEGIN_SRC emacs-lisp
-(setq gc-cons-threshold 20000000)
+  (setq gc-cons-threshold 20000000)
 #+END_SRC
 
 ** Delete Trailing Whitespace
+
 #+BEGIN_SRC emacs-lisp
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 ** Single Space After Periods
+
 Don’t assume that sentences should have two spaces after periods.
+
 #+BEGIN_SRC emacs-lisp
-(setq sentence-end-double-space nil)
+  (setq sentence-end-double-space nil)
 #+END_SRC
 
 ** Overwrite Selected Text
+
 If some text is selected and you write something, that should replace the selected text.
+
 #+BEGIN_SRC emacs-lisp
-(setq delete-selection-mode t)
+  (setq delete-selection-mode t)
 #+END_SRC
 
 ** Ensure That Files End With Newline
+
 Append a newline if it doesn’t exist upon saving.
+
 #+BEGIN_SRC emacs-lisp
-(setq require-final-newline t)
+  (setq require-final-newline t)
 #+END_SRC
 
 ** Set Default Line Length
+
 I want my default line length to be 80 columns.
+
 #+BEGIN_SRC emacs-lisp
-(setq fill-column 80)
+  (setq fill-column 80)
 #+END_SRC
 
 ** Debug on Error
+
 Errors should produce back traces when they occur.
+
 #+BEGIN_SRC emacs-lisp
-(setq debug-on-error t)
+  (setq debug-on-error t)
 #+END_SRC
 
 ** Always Indent With Spaces
+
 Tabs are evil, never use tabs.
+
 #+BEGIN_SRC emacs-lisp
-(setq-default indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil)
 #+END_SRC
 
 ** Character Encoding
+
 Set UTF-8 as the default encoding.
+
 #+BEGIN_SRC emacs-lisp
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-language-environment 'utf-8)
-(set-selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-language-environment 'utf-8)
+  (set-selection-coding-system 'utf-8)
 #+END_SRC
+
 ** Writing Prose
+
 *** Wrap Paragraphs Automatically
-~visual-fill-column~ is a minor mode that mimicst the effect of ~fill-column~ in ~visual-line-mode~. Instead of wrapping lines at the window edge, it wraps at ~fill-column~.
+
+=visual-fill-column= is a minor mode that mimicst the effect of =fill-column= in =visual-line-mode=. Instead of wrapping lines at the window edge, it wraps at =fill-column=.
 
 #+BEGIN_SRC emacs-lisp
-(use-package visual-fill-column
-  :init
-  (dolist (hook '(visual-line-mode-hook))
-    (add-hook hook #'visual-fill-column-mode))
-  :config
-  (setq split-window-preferred-function
-    #'visual-fill-column-split-window-sensibly)
-  (advice-add 'text-scale-adjust :after
-    #'visual-fill-column-adjust))
+  (use-package visual-fill-column
+    :init
+    (dolist (hook '(visual-line-mode-hook))
+      (add-hook hook #'visual-fill-column-mode))
+    :config
+    (setq split-window-preferred-function
+          #'visual-fill-column-split-window-sensibly)
+    (advice-add 'text-scale-adjust :after
+                #'visual-fill-column-adjust))
 #+END_SRC
 
-When writing prose I want to automatically wrap paragraphs. Set ~visual-line-mode~ for modes that benefit from it.
+When writing prose I want to automatically wrap paragraphs. Set =visual-line-mode= for modes that benefit from it.
 
 #+BEGIN_SRC emacs-lisp
-(dolist (prose-mode-hooks '(org-mode-hook
-                            text-mode-hook
-                            markdown-mode-hook))
-        (add-hook prose-mode-hooks #'visual-line-mode))
+  (dolist (prose-mode-hooks '(org-mode-hook
+                              text-mode-hook
+                              markdown-mode-hook))
+    (add-hook prose-mode-hooks #'visual-line-mode))
 #+END_SRC
 
 *** Enable =electric-quote-mode=
+
 I want =electric-quote-mode= enabled by default when writing prose.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook 'electric-quote-mode)
-(add-hook 'text-mode-hook 'electric-quote-mode)
+  (add-hook 'org-mode-hook 'electric-quote-mode)
+  (add-hook 'text-mode-hook 'electric-quote-mode)
 #+END_SRC

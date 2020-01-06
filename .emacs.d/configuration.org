@@ -1,168 +1,190 @@
 #+TITLE: Emacs Configuration
+#+AUTHOR: Davide Petilli <davide.petilli@gmail.com>
 #+OPTIONS: toc:2 num:nil ^:nil
 
 This is a /Literate Programming/ configuration for my Emacs installation.
 
 ** Structure
-Everything starts in ~init.el~ which is the entry point for every Emacs configuration. The main purpose of ~init.el~ is to load this ~configuration.org~ file, compile it in a ~configuration.el~, which, in turn, loads all the other ~.org~ files in the repository.
 
-** Startup
-Here everything starts.
+Everything starts in =init.el= which is the entry point for every Emacs configuration. The main purpose of =init.el= is to load this =configuration.org= file, compile it in a =configuration.el=, which, in turn, loads all the other =.org= files in the repository.
 
-*** Setup Load Path
+* Implementation
+
+Here it starts the actual configuration.
+
+** Setup Load Path
+
 Add the =resources= directory to =load-path=.
+
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path (concat config-dir "/resources/"))
+  (add-to-list 'load-path (concat config-dir "/resources/"))
 #+END_SRC
 
-*** Package configuration
+** ELPA
+
 Initialize ELPA archive repositories.
+
 #+BEGIN_SRC emacs-lisp
-(require 'package)
-(setq package-archives
-   '(("gnu"         . "http://elpa.gnu.org/packages/")
-     ("org"         . "http://orgmode.org/elpa/")
-     ("melpa"       . "http://melpa.org/packages/")
-     ("marmalade"   . "http://marmalade-repo.org/packages/")))
-(package-initialize)
+  (require 'package)
+  (setq package-archives
+        '(("gnu"       . "http://elpa.gnu.org/packages/")
+          ("org"       . "http://orgmode.org/elpa/")
+          ("melpa"     . "http://melpa.org/packages/")
+          ("marmalade" . "http://marmalade-repo.org/packages/")))
+  (package-initialize)
 #+END_SRC
 
-Ensure that ~use-packages~ is initialized.
+** Setup =use-packages=
+
+Ensure that =use-packages= is initialized.
+
 #+BEGIN_SRC emacs-lisp
-(when (not (package-installed-p 'use-package))
-  (package-refresh-contents)
-  (package-install 'use-package))
+  (when (not (package-installed-p 'use-package))
+    (package-refresh-contents)
+    (package-install 'use-package))
 #+END_SRC
 
 Let’s make sure that =use-packages= will install packages if they are not yet available.
+
 #+BEGIN_SRC emacs-lisp
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
 #+END_SRC
 
 Always compile packages and use the newest version available.
+
 #+BEGIN_SRC emacs-lisp
-(use-package auto-compile
-  :config (auto-compile-on-load-mode))
-(setq load-prefer-newer t)
+  (use-package auto-compile
+    :config (auto-compile-on-load-mode))
+  (setq load-prefer-newer t)
 #+END_SRC
 
-*** Function for loading configs
+** Function for Loading configs
+
 This function is used to load the configuration files.
+
+#+NAME: load-config-file
 #+BEGIN_SRC emacs-lisp
-(defun load-config-file(file)
-  "Function used to load *.org configuration files."
-  (org-babel-load-file (expand-file-name file config-dir)))
+  (defun load-config-file(file)
+    "Function used to load *.org configuration files."
+    (org-babel-load-file (expand-file-name file config-dir)))
 #+END_SRC
 
-*** Load Config Files
+** Load Config Files
+
 - Miscellaneous settings in [[file:config-misc.org][config-misc]]
   #+BEGIN_SRC emacs-lisp
-  (load-config-file "config-misc.org")
+    (load-config-file "config-misc.org")
   #+END_SRC
 - UI Preferences settings in [[file:config-ui.org][config-ui]]
   #+BEGIN_SRC emacs-lisp
-  (load-config-file "config-ui.org")
+    (load-config-file "config-ui.org")
   #+END_SRC
 - /Org-mode/ configuration in [[file:config-org.org][config org]]
   #+BEGIN_SRC emacs-lisp
-  (load-config-file "config-org.org")
+    (load-config-file "config-org.org")
   #+END_SRC
 - /Helm/ configuration in [[file:config-helm.org][config helm]]
   #+BEGIN_SRC emacs-lisp
-  (load-config-file "config-helm.org")
+    (load-config-file "config-helm.org")
   #+END_SRC
 - /Evil/ configuration in [[file:config-evil.org][config evil]]
   #+BEGIN_SRC emacs-lisp
-  (load-config-file "config-evil.org")
+    (load-config-file "config-evil.org")
   #+END_SRC
 - /Magit/ configuration in [[file:config-magit.org][config magit]]
   #+BEGIN_SRC emacs-lisp
-  (load-config-file "config-magit.org")
+    (load-config-file "config-magit.org")
   #+END_SRC
 
 ** Languages
+
 TODO: This should be split in multiple language specific config files.
 
 Add colorful parenthesis matching in all programming modes.
 
 #+BEGIN_SRC emacs-lisp
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
 #+END_SRC
 
 *** Lisp
+
 Make handling lisp expressions much, much easier.
 
 #+BEGIN_SRC emacs-lisp
-(use-package paredit)
+  (use-package paredit)
 #+END_SRC
 
 *** Clojure
+
 Key bindings and colorization for closure.
 
 #+BEGIN_SRC emacs-lisp
-(use-package clojure-mode
-  :after paredit
-  :hook (enable-paredit-mode subword-mode)
-  :config
-  ;; use clojure-mode for other extensions
-  (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
-  (use-package clojure-mode-extra-font-locking))
+  (use-package clojure-mode
+    :after paredit
+    :hook (enable-paredit-mode subword-mode)
+    :config
+    ;; use clojure-mode for other extensions
+    (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
+    (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+    (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
+    (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
+    (use-package clojure-mode-extra-font-locking))
 #+END_SRC
 
 Integration with a Clojure REPL.
 
 #+BEGIN_SRC emacs-lisp
-(use-package cider
-  :after paredit
-  ;; provides minibuffer documentation for the code you’re
-  ;; typing into repl and enable paredit in REPL
-  :hook ((cider-mode . eldoc-mode)
-         (cider-mode . paredit-mode))
-  :config
-  ;; go right to the REPL buffer when it’s finished connecting
-  (setq cider-repl-pop-to-buffer-on-connect t)
-  ;; when there’s a cider error, show its buffer and switch to it
-  (setq cider-show-error-buffer t)
-  (setq cider-auto-select-error-buffer t)
-  ;; Where to store cider history
-  (setq cider-repl-history-file "~/.emacs.d/cider-history")
-  ;; Wrap when navigating history
-  (setq cider-repl-wrap-history t))
+  (use-package cider
+    :after paredit
+    ;; provides minibuffer documentation for the code you’re
+    ;; typing into repl and enable paredit in REPL
+    :hook ((cider-mode . eldoc-mode)
+           (cider-mode . paredit-mode))
+    :config
+    ;; go right to the REPL buffer when it’s finished connecting
+    (setq cider-repl-pop-to-buffer-on-connect t)
+    ;; when there’s a cider error, show its buffer
+    ;; and switch to it
+    (setq cider-show-error-buffer t)
+    (setq cider-auto-select-error-buffer t)
+    ;; Where to store cider history
+    (setq cider-repl-history-file "~/.emacs.d/cider-history")
+    ;; Wrap when navigating history
+    (setq cider-repl-wrap-history t))
 #+END_SRC
+
 *** Markdown
-Auto-load the major mode =markdown-mode= for =.md= and =.markdown=
-extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for =README.md= files.
+
+Auto-load the major mode =markdown-mode= for =.md= and =.markdown= extensions. Load the GitHub Flavored Markdown mode =gfm-mode= for =README.md= files.
 
 #+BEGIN_SRC emacs-lisp
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  (use-package markdown-mode
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
 #+END_SRC
 
 *** Yaml
+
 Load =yaml-mode= for YAML file extensions.
 
 #+BEGIN_SRC emacs-lisp
-(use-package yaml-mode
-  :commands (yaml-mode)
-  :mode (("\\.yml\\'" . yaml-mode)
-         ("\\.yaml\\'" . yaml-mode)))
+  (use-package yaml-mode
+    :commands (yaml-mode)
+    :mode (("\\.yml\\'" . yaml-mode)
+           ("\\.yaml\\'" . yaml-mode)))
 #+END_SRC
 
 *** Cucumber (Gherkin)
-I want ~feature-mode~ to be loaded when I open Cucumber /feature/
-files written in Gherkin.
+
+I want =feature-mode= to be loaded when I open Cucumber /feature/ files written in Gherkin.
 
 #+BEGIN_SRC emacs-lisp
-(use-package feature-mode
-  :commands (feature-mode)
-  :mode (("\\.feature\\'" . feature-mode)))
+  (use-package feature-mode
+    :commands (feature-mode)
+    :mode (("\\.feature\\'" . feature-mode)))
 #+END_SRC
