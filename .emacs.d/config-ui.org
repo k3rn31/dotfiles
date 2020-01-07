@@ -13,14 +13,16 @@ Remove /splash screen/ and clear the scratch buffer.
         initial-scratch-message nil)
 #+END_SRC
 
-** Hide window "Stuff"
+** Disable all GUI
 
 I don’t want GUI stuff showing up.
 
 #+BEGIN_SRC emacs-lisp
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
+  (when window-system
+    (menu-bar-mode -1)
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
+    (tooltip-mode -1))
 #+END_SRC
 
 ** Show Line Numbers
