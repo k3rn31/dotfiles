@@ -26,6 +26,12 @@ I tweak a few things:
     (add-hook 'with-editor-mode-hook 'evil-insert-state))
 #+END_SRC
 
+** Highlight Git Changes in Fringes
+
+#+BEGIN_SRC emacs-lisp
+  (use-package diff-hl
+    :hook (after-init . global-diff-hl-mode))
+#+END_SRC
 ** Commit Messages Style
 
 Force me to write clean and easy to read commit messages.
