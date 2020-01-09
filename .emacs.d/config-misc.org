@@ -11,6 +11,21 @@ When opening a file, start searching at user’s home directory.
   (setq default-directory "~/")
 #+END_SRC
 
+** Configure Backups
+
+I don’t want ’~’ backup files scattered everywhere on the filesystem, so I place them in the /temp/ directory.
+I also fine tune the backup policy so that it keeps the 6 more recent versions and two oldest versions, deleting all the backups in the middle automatically.
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory))
+        backup-by-copying t
+        delete-old-versions t
+        kept-new-versions 6
+        kept-old-versions 2
+        version-control t)
+#+END_SRC
+
 ** Increase GC threshold
 
 Allow 20MB of memory (instead of 0.76MB) before calling garbage collection.
