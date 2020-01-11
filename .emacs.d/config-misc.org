@@ -11,6 +11,15 @@ When opening a file, start searching at user’s home directory.
   (setq default-directory "~/")
 #+END_SRC
 
+** Configure Custom
+
+I don’t want Custom settings to pollute my init.el file, so I use a separate location.
+
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file)
+#+END_SRC
+
 ** Configure Backups
 
 I don’t want ’~’ backup files scattered everywhere on the filesystem, so I place them in the /temp/ directory.
