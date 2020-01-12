@@ -6,7 +6,7 @@
 
 config_version: 2
 settings:
-  tabs.position:
-    global: top
-  tabs.width:
-    global: 15%
+  fonts.monospace:
+    global: '"Fira Mono", Monospace, "DejaVu Sans Mono", Monaco, "Bitstream Vera Sans
+      Mono", "Andale Mono", "Courier New", Courier, "Liberation Mono", monospace,
+      Fixed, Consolas, Terminal'
