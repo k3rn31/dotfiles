@@ -34,6 +34,14 @@ Display line numbers by default.
     (global-display-line-numbers-mode))
 #+END_SRC
 
+** Status Line
+
+Display current column.
+
+#+BEGIN_SRC emacs-lisp
+  (setq column-number-mode t)
+#+END_SRC
+
 ** Flash Screen Instead of Bell
 
 In my office environment I prefer to be quiet.
