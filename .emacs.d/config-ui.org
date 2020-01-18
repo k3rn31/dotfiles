@@ -68,6 +68,8 @@ TODO: Make the font size change according to screen size.
 
 #+BEGIN_SRC emacs-lisp
   (cond
+   ((find-font (font-spec :name "JetBrains Mono"))
+    (set-frame-font (font-spec :name "JetBrains Mono" :size 13)))
    ((find-font (font-spec :name "Fira Mono"))
     (set-frame-font (font-spec :name "Fira Mono" :size 13)))
    ((find-font (font-spec :name "Inconsolata"))
