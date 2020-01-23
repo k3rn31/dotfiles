@@ -49,6 +49,7 @@ case $option in
 	mv -iv ~/.config/zathura ~/.config/zathura.old
 	mv -iv ~/.config/st ~/.config/st.old
 	mv -iv ~/.weechat ~/.weechat.old
+	mv -iv ~/.ideavimrc ~/.ideavimrc.old
     else
         echo -e "\u001b[36;1m Skipping backups. \u001b[0m"
     fi
@@ -65,6 +66,7 @@ case $option in
     ln -sfnv "$PWD/.config/zathura" ~/.config/zathura
     ln -sfnv "$PWD/st" ~/builds/st
     ln -sfnv "$PWD/.weechat" ~/.weechat
+    ln -sfnv "$PWD/.ideavimrc" ~/.ideavimrc
     ;;
 
 "0")echo -e "\u001b[32;1m Bye! \u001b[0m"
