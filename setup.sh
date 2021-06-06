@@ -47,7 +47,7 @@ case $option in
 	mv -iv ~/.config/picom ~/.config/picom.old
 	mv -iv ~/.config/qutebrowser ~/.config/qutebrowser.old
 	mv -iv ~/.config/zathura ~/.config/zathura.old
-	mv -iv ~/.config/st ~/.config/st.old
+	mv -iv ~/.config/alacritty ~/.config/ideavimrc.old
 	mv -iv ~/.weechat ~/.weechat.old
 	mv -iv ~/.ideavimrc ~/.ideavimrc.old
     else
@@ -64,7 +64,7 @@ case $option in
     ln -sfnv "$PWD/.config/picom" ~/.config/picom
     ln -sfnv "$PWD/.config/qutebrowser" ~/.config/qutebrowser
     ln -sfnv "$PWD/.config/zathura" ~/.config/zathura
-    ln -sfnv "$PWD/st" ~/builds/st
+    ln -sfnv "$PWD/alacritty" ~/.config/alacritty
     ln -sfnv "$PWD/.weechat" ~/.weechat
     ln -sfnv "$PWD/.ideavimrc" ~/.ideavimrc
     ;;

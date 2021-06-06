@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Set some defalut applications
-export TERMINAL=st
-export BROWSER=qutebrowser
+export TERMINAL=alacritty
+export BROWSER=firefox
 
 # Position external display
 if xrandr --verbose | grep -w -q "HDMI-1 connected"; then
