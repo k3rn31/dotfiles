@@ -6,15 +6,13 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
-alias vi='vim'
+alias vi='nvim'
 
 PS1='[\u@\h \W]\$ '
 
-# Kubernetes
-alias kubectl=microk8s.kubectl
-alias helm=microk8s.helm
-alias k=microk8s.kubectl
-source <(k completion bash | sed s/kubectl/k/g)
-
 # Load aliases
-source .bash_aliases
+source ~/.bash_aliases
+
+export PATH=$PATH:$HOME/.local/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin

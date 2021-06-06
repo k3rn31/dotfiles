@@ -5,6 +5,6 @@
 (("org-capture-last-stored"
  (filename . "~/Dropbox/org/grocery.org")
  (front-context-string . "** TODO Spesa de")
- (rear-context-string)
- (position . 11))
+ (rear-context-string . " - [ ] peperoni\n")
+ (position . 996))
 )

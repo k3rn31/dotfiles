@@ -57,15 +57,15 @@ case $option in
     ln -sfnv "$PWD/.bashrc" ~/.bashrc
     ln -sfnv "$PWD/.bash_aliases" ~/.bash_aliases
     ln -sfnv "$PWD/.xprofile" ~/.xprofile
-    ln -sfnv "$PWD/.scripts" ~/.scripts
-    ln -sfnv "$PWD/.config/dunst" ~/.config/dunst
-    ln -sfnv "$PWD/.config/i3" ~/.config/i3
-    ln -sfnv "$PWD/.config/i3blocks" ~/.config/i3blocks
-    ln -sfnv "$PWD/.config/picom" ~/.config/picom
-    ln -sfnv "$PWD/.config/qutebrowser" ~/.config/qutebrowser
-    ln -sfnv "$PWD/.config/zathura" ~/.config/zathura
+    ln -sfnv "$PWD/scripts" ~/.scripts
+    ln -sfnv "$PWD/config/dunst" ~/.config/dunst
+    ln -sfnv "$PWD/config/i3" ~/.config/i3
+    ln -sfnv "$PWD/config/i3blocks" ~/.config/i3blocks
+    ln -sfnv "$PWD/config/picom" ~/.config/picom
+    ln -sfnv "$PWD/config/qutebrowser" ~/.config/qutebrowser
+    ln -sfnv "$PWD/config/zathura" ~/.config/zathura
     ln -sfnv "$PWD/alacritty" ~/.config/alacritty
-    ln -sfnv "$PWD/.weechat" ~/.weechat
+    ln -sfnv "$PWD/weechat" ~/.weechat
     ln -sfnv "$PWD/.ideavimrc" ~/.ideavimrc
     ;;
 

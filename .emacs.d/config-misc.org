@@ -143,3 +143,13 @@ I want =electric-quote-mode= enabled by default when writing prose.
   (add-hook 'org-mode-hook 'electric-quote-mode)
   (add-hook 'text-mode-hook 'electric-quote-mode)
 #+END_SRC
+** Languages
+
+#+BEGIN_SRC emacs-lisp
+(use-package mozc
+  :config
+  (setq default-input-method "japanese-mozc")
+  (use-package mozc-popup
+    :custom
+    (setq mozc-candidate-style 'overlay)))
+#+END_SRC
