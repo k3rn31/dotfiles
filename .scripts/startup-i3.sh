@@ -24,3 +24,6 @@ unclutter &
 
 # Start applets
 /usr/bin/blueman-applet	# Bluetooth Manager
+
+# Start Japanese input
+/usr/bin/fcitx -d
