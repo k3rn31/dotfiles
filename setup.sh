@@ -42,6 +42,7 @@ case $option in
 	mv -iv ~/.xprofile ~/.xprofile.old
 	mv -iv ~/.scripts ~/.scripts.old
 	mv -iv ~/.vimrc ~/.vimrc.old
+	mv -iv ~/.tmux.conf ~/.tmux.conf.old
 	mv -iv ~/.config/dunst ~/.config/dunst.old
 	mv -iv ~/.config/nvim ~/.config/nvim.old
 	mv -iv ~/.config/i3 ~/.config/i3.old
@@ -59,6 +60,7 @@ case $option in
     ln -sfnv "$PWD/.bashrc" ~/.bashrc
     ln -sfnv "$PWD/.bash_aliases" ~/.bash_aliases
     ln -sfnv "$PWD/.xprofile" ~/.xprofile
+    ln -sfnv "$PWD/.tmux.conf" ~/.tmux.conf
     ln -sfnv "$PWD/scripts" ~/.scripts
     ln -sfnv "$PWD/config/dunst" ~/.config/dunst
     ln -sfnv "$PWD/config/nvim" ~/.config/nvim
