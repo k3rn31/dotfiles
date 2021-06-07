@@ -41,7 +41,9 @@ case $option in
 	mv -iv ~/.bash_aliases ~/.bash_aliases.old
 	mv -iv ~/.xprofile ~/.xprofile.old
 	mv -iv ~/.scripts ~/.scripts.old
+	mv -iv ~/.vimrc ~/.vimrc.old
 	mv -iv ~/.config/dunst ~/.config/dunst.old
+	mv -iv ~/.config/nvim ~/.config/nvim.old
 	mv -iv ~/.config/i3 ~/.config/i3.old
 	mv -iv ~/.config/i3blocks ~/.config/i3blocks.old
 	mv -iv ~/.config/picom ~/.config/picom.old
@@ -59,6 +61,8 @@ case $option in
     ln -sfnv "$PWD/.xprofile" ~/.xprofile
     ln -sfnv "$PWD/scripts" ~/.scripts
     ln -sfnv "$PWD/config/dunst" ~/.config/dunst
+    ln -sfnv "$PWD/config/nvim" ~/.config/nvim
+		ln -sfnv "$PWD/config/nvim" ~/.vimrc
     ln -sfnv "$PWD/config/i3" ~/.config/i3
     ln -sfnv "$PWD/config/i3blocks" ~/.config/i3blocks
     ln -sfnv "$PWD/config/picom" ~/.config/picom
