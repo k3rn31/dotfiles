@@ -62,7 +62,7 @@ case $option in
     ln -sfnv "$PWD/scripts" ~/.scripts
     ln -sfnv "$PWD/config/dunst" ~/.config/dunst
     ln -sfnv "$PWD/config/nvim" ~/.config/nvim
-		ln -sfnv "$PWD/config/nvim" ~/.vimrc
+    ln -sfnv "$PWD/config/nvim/init.vim" ~/.vimrc
     ln -sfnv "$PWD/config/i3" ~/.config/i3
     ln -sfnv "$PWD/config/i3blocks" ~/.config/i3blocks
     ln -sfnv "$PWD/config/picom" ~/.config/picom
