@@ -4,15 +4,26 @@
 " Download vim-plug from the URL below and follow the installation
 " instructions:
 " https://github.com/junegunn/vim-plug
+"
+" Some plugins need python3 supporte: pip3 install --user pynvim
 "----------------------------------------------
 call plug#begin('~/.vim/plugged')
 
 " General plugins
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
+Plug 'preservim/nerdtree'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 " Language support
-Plug 'fatih/vim-go'                            " Go support
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'                 " Markdown syntax highlighting
 
 " Colorschemes
@@ -162,14 +173,37 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 0
 
 " Enable powerline fonts.
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 
 " Explicitly define some symbols that did not work well for me in Linux.
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline_symbols.branch = ''
-let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_symbols.maxlinenr = ''
+
+"----------------------------------------------
+"
+"----------------------------------------------
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
+" Show hidden files by default.
+let NERDTreeShowHidden = 1
+
+" Allow NERDTree to change session root.
+let g:NERDTreeChDirMode = 2
+
+"----------------------------------------------
+" Plugin: Shougo/deoplete
+"----------------------------------------------
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
