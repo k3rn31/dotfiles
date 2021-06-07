@@ -6,6 +6,8 @@
 " https://github.com/junegunn/vim-plug
 "
 " Some plugins need python3 supporte: pip3 install --user pynvim
+"
+" Other tools to install: fzf, bat
 "----------------------------------------------
 call plug#begin('~/.vim/plugged')
 
@@ -13,6 +15,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mg979/vim-visual-multi'
+Plug 'preservim/nerdcommenter'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
