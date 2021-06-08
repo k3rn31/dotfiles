@@ -7,7 +7,7 @@
 "
 " Some plugins need python3 supporte: pip3 install --user pynvim
 "
-" Other tools to install: fzf, bat
+" Other tools to install: fzf, bat, ctags
 "----------------------------------------------
 call plug#begin('~/.vim/plugged')
 
@@ -15,6 +15,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdtree'
+Plug 'preservim/tagbar'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mg979/vim-visual-multi'
@@ -182,6 +183,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
 "----------------------------------------------
 " Plugin: bling/vim-airline
 "----------------------------------------------
@@ -229,6 +231,11 @@ let NERDTreeShowHidden = 1
 
 " Allow NERDTree to change session root.
 let g:NERDTreeChDirMode = 2
+
+"----------------------------------------------
+" Plugin: bling/vim-airline
+"----------------------------------------------
+nmap <F8> :TagbarToggle<CR>
 
 "----------------------------------------------
 " Plugin: Shougo/deoplete
