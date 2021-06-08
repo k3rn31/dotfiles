@@ -44,28 +44,40 @@ call plug#end()
 "----------------------------------------------
 " General settings
 "----------------------------------------------
+set nocompatible                  " no need to be in old vim compatibility
+
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set autoindent                    " take indent for new line from previous line
 set smartindent                   " enable smart indentation
 set autoread                      " reload file if the file changes on the disk
 set autowrite                     " write when switching buffers
 set autowriteall                  " write on :quit
 set clipboard=unnamedplus
-set colorcolumn=81                " highlight the 80th column as an indicator
 set cursorline                    " highlight the current line for the cursor
 set encoding=utf-8
-set expandtab                     " expands tabs to spaces
-set list                          " show trailing whitespace
 set nospell                       " disable spelling
 set noswapfile                    " disable swapfile usage
-set nowrap
-set noerrorbells                  " No bells!
-set novisualbell                  " I said, no bells!
-set number                        " show line numbers
+set visualbell
+set wildmenu
+set wildmode=list:longest
+set ruler
+set relativenumber
 set softtabstop=2
 set tabstop=2
 set title                         " let vim set the terminal title
 set updatetime=100                " redraw the status bar often
 set t_Co=256
+set ttyfast
+
+set nowrap
+set colorcolumn=81                " highlight the 80th column as an indicator
+set formatoptions=qrn1
+
+set list                          " show trailing whitespace
+set listchars=tab:▸\ ,eol:¬
+
 " neovim specific settings
 if has('nvim')
     " Set the Python binaries neovim is using. Please note that you will need to
@@ -94,13 +106,19 @@ autocmd BufLeave * silent! :wa
 autocmd BufWritePre * :%s/\s\+$//e
 
 "----------------------------------------------
-" Editing
+" Search
 "----------------------------------------------
-" Compete options for the pop up menu for autocompletion.
-set completeopt=menu,noselect
-
-" remove the horrendous preview window
-set completeopt-=preview
+nnoremap / /\v
+vnoremap / /\v
+set ignorecase
+set smartcase
+set gdefault
+set incsearch
+set showmatch
+set hlsearch
+nnoremap <leader><space> :noh<cr>
+nnoremap <tab> %
+vnoremap <tab> %
 
 "----------------------------------------------
 " Colors
@@ -129,16 +147,20 @@ noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
 
-" Move between buffers with Shift + arrow key...
-nnoremap <Left> :bprevious<cr>
-nnoremap <Right> :bnext<cr>
+" Use screen movement
+nnoremap j gj
+nnoremap k gk
 
-" ... but skip the quickfix when navigating
-augroup qf
-    autocmd!
-    autocmd FileType qf set nobuflisted
-augroup END
+" Map ESC to jj
+inoremap jj <ESC>
+
+" Let ; behave like :
+nnoremap ; :
 
 "----------------------------------------------
 " Splits
@@ -154,6 +176,11 @@ nnoremap <leader>h :split<cr>
 " Closing splits
 nnoremap <leader>q :close<cr>
 
+" Move around splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 "----------------------------------------------
 " Plugin: bling/vim-airline
 "----------------------------------------------
@@ -201,6 +228,9 @@ let g:NERDTreeChDirMode = 2
 " Plugin: Shougo/deoplete
 "----------------------------------------------
 let g:deoplete#enable_at_startup = 1
+
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 "----------------------------------------------
@@ -335,6 +365,8 @@ au FileType make set tabstop=2
 " Language: Markdown
 "----------------------------------------------
 au FileType markdown setlocal spell
+au FileType markdown set wrap
+au FileType markdown set textwidth=79
 au FileType markdown set expandtab
 au FileType markdown set shiftwidth=4
 au FileType markdown set softtabstop=4
