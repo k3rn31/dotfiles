@@ -23,6 +23,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jiangmiao/auto-pairs'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -201,8 +202,6 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-" let g:airline_symbols.branch = ''
-" let g:airline_symbols.maxlinenr = ''
 
 "----------------------------------------------
 " Plugin: preservim/nerdtree
@@ -228,9 +227,6 @@ let g:NERDTreeChDirMode = 2
 " Plugin: Shougo/deoplete
 "----------------------------------------------
 let g:deoplete#enable_at_startup = 1
-
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 "----------------------------------------------
@@ -299,6 +295,7 @@ let g:go_test_show_name = 1
 let g:go_addtags_transform = "snakecase"
 
 let g:go_def_mapping_enabled = 0
+
 "----------------------------------------------
 " Language: Bash
 "----------------------------------------------
