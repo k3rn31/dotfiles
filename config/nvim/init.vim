@@ -37,6 +37,7 @@ endif
 " Language support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'                 " Markdown syntax highlighting
+Plug 'cespare/vim-toml'
 
 " Colorschemes
 Plug 'arcticicestudio/nord-vim'
