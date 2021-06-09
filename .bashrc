@@ -16,3 +16,5 @@ source ~/.bash_aliases
 export PATH=$PATH:$HOME/.local/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+
+eval "$(starship init bash)"
