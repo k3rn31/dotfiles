@@ -43,6 +43,7 @@ case $option in
 	mv -iv ~/.scripts ~/.scripts.old
 	mv -iv ~/.vimrc ~/.vimrc.old
 	mv -iv ~/.tmux.conf ~/.tmux.conf.old
+	mv -iv ~/.config/starship.toml ~/.config/starship.toml.old
 	mv -iv ~/.config/dunst ~/.config/dunst.old
 	mv -iv ~/.config/nvim ~/.config/nvim.old
 	mv -iv ~/.config/i3 ~/.config/i3.old
@@ -62,6 +63,7 @@ case $option in
     ln -sfnv "$PWD/.xprofile" ~/.xprofile
     ln -sfnv "$PWD/.tmux.conf" ~/.tmux.conf
     ln -sfnv "$PWD/scripts" ~/.scripts
+    ln -sfnv "$PWD/config/starship.toml" ~/.config/starship.toml
     ln -sfnv "$PWD/config/dunst" ~/.config/dunst
     ln -sfnv "$PWD/config/nvim" ~/.config/nvim
     ln -sfnv "$PWD/config/nvim/init.vim" ~/.vimrc
