@@ -25,6 +25,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'dense-analysis/ale'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -38,6 +39,7 @@ endif
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'plasticboy/vim-markdown'                 " Markdown syntax highlighting
 Plug 'cespare/vim-toml'
+Plug 'rust-lang/rust.vim'
 
 " Colorschemes
 Plug 'arcticicestudio/nord-vim'
@@ -104,9 +106,6 @@ let mapleader = ','
 
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
-
-" Remove trailing white spaces on save
-autocmd BufWritePre * :%s/\s\+$//e
 
 "----------------------------------------------
 " Search
@@ -206,6 +205,9 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
+
 "----------------------------------------------
 " Plugin: preservim/nerdtree
 "----------------------------------------------
@@ -243,6 +245,29 @@ nmap <F8> :TagbarToggle<CR>
 "----------------------------------------------
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+
+"----------------------------------------------
+" Plugin: dense-analysis/ale
+"----------------------------------------------
+set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_fix_on_save = 1
+" Use deoplete
+let g:ale_completion_enabled = 0
+let g:ale_completion_autoimport = 0
+
+nnoremap <leader>d :ALEGoToDefinition<CR>
+nnoremap <leader>r :ALEFindReference<CR>
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'rust': ['rustfmt']
+\}
+
+let g:ale_linters = {
+\  'rust': ['analyzer'],
+\}
 
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
@@ -310,6 +335,15 @@ let g:go_test_show_name = 1
 let g:go_addtags_transform = "snakecase"
 
 let g:go_def_mapping_enabled = 0
+
+"----------------------------------------------
+" Language: Rust
+"----------------------------------------------
+au FileType rust set expandtab
+au FileType rust set shiftwidth=4
+au FileType rust set softtabstop=4
+au FileType rust set tabstop=4
+au FileType rust set colorcolumn=100
 
 "----------------------------------------------
 " Language: Bash
@@ -424,4 +458,3 @@ au FileType yaml set expandtab
 au FileType yaml set shiftwidth=2
 au FileType yaml set softtabstop=2
 au FileType yaml set tabstop=2
-
