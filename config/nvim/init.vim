@@ -27,6 +27,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
+Plug 'ayu-theme/ayu-vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -148,7 +149,8 @@ endif
 
 set background=dark
 
-colorscheme nord
+let ayucolor="mirage"
+colorscheme ayu
 
 "----------------------------------------------
 " Navigation

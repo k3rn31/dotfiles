@@ -209,14 +209,16 @@ gaps outer 5
 bindsym $mod+z gaps outer current minus 5
 bindsym $mod+Shift+z gaps outer current plus 5
 
-# class                 border      backgr. text indicator      child_border
-client.focused          $fg-alt     $bg     $hl  $fg-alt        $hl
-client.focused_inactive $fg-alt     $bg     $fg  $fg-alt        $fg-alt
-client.unfocused        $fg-alt     $bg     $fg  $fg-alt        $fg-alt
-client.urgent           $fg-alt     $bg     $fg  $fg-alt        $fg-alt
-client.placeholder      $fg-alt     $bg     $fg  $fg-alt        $fg-alt
+######## Styling ########
 
-client.background       $bg
+# class                 border  bground text    indicator child_border
+client.focused          #FFCC66 #33415E #FFFFFF #2E9EF4   #FFCC66
+client.focused_inactive #1F2430 #1F2430 #FFFFFF #484E50   #1F2430
+client.unfocused        #1F2430 #1F2430 #888888 #292D2E   #1F2430
+client.urgent           #2F343A #FF3333 #FFFFFF #900000   #900000
+client.placeholder      #1F2430 #1F2430 #FFFFFF #000000   #0C0C0C
+
+client.background       #1F2430
 
 for_window [class="Network Connections"] floating enable
 for_window [class="Blueman-manager"] floating enable
