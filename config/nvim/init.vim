@@ -25,6 +25,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
 
 if has('nvim')
@@ -96,6 +97,7 @@ endif
 " Enable mouse if possible
 if has('mouse')
     set mouse=a
+    set mousemodel=popup_setpos
 endif
 
 " Allow vim to set a custom font or color for a word
@@ -110,6 +112,8 @@ autocmd BufLeave * silent! :wa
 "----------------------------------------------
 " Search
 "----------------------------------------------
+" TEXT SEARCH:
+"-------------
 nnoremap / /\v
 vnoremap / /\v
 set ignorecase
@@ -121,6 +125,11 @@ set hlsearch
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
+
+" FILE SEARCH:
+"-------------
+"allows FZF to open by pressing ALT-F
+map <M-f> :FZF<CR>
 
 "----------------------------------------------
 " Colors
@@ -231,9 +240,10 @@ autocmd BufEnter * if tabpagenr('$') == 1 &&
 
 " Show hidden files by default.
 let NERDTreeShowHidden = 1
-
 " Allow NERDTree to change session root.
 let g:NERDTreeChDirMode = 2
+"Automatically find and select currently opened file in NERDTree
+let g:nerdtree_tabs_autofind=1
 
 "----------------------------------------------
 " Plugin: bling/vim-airline
@@ -246,17 +256,28 @@ nmap <F8> :TagbarToggle<CR>
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
+" Use tab to autocomplete
+inoremap <silent><expr> <TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr><S-TAB> pumvisible() ? "\<c-p>" : "\<S-TAB>"
+
 "----------------------------------------------
 " Plugin: dense-analysis/ale
 "----------------------------------------------
 set completeopt=menu,menuone,preview,noselect,noinsert
-let g:ale_fix_on_save = 1
+
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_lint_on_insert_leave = 0
+let g:ale_hover_to_preview = 1
+
 " Use deoplete
 let g:ale_completion_enabled = 0
 let g:ale_completion_autoimport = 0
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
 
 nnoremap <leader>d :ALEGoToDefinition<CR>
 nnoremap <leader>r :ALEFindReference<CR>
+nnoremap <leader>h :ALEHover<CR>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
@@ -267,8 +288,15 @@ let g:ale_fixers = {
 
 let g:ale_linters = {
 \  'rust': ['analyzer'],
+\  'go': ['go build', 'golangci-lint'],
 \}
+let g:ale_go_golangci_lint_options = '--enable-all --disable wsl --disable goimports --disable gofmt --fix'
+let g:ale_go_golangci_lint_package = 1
+let g:ale_go_gofmt_options = '-s'
 
+let g:ale_rust_cargo_check_tests = 1
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+let g:ale_rust_cargo_clippy_options = '--fix'
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
 "----------------------------------------------
@@ -285,6 +313,7 @@ au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
+au FileType go set colorcolumn=120
 
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
