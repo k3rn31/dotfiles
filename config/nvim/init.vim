@@ -106,9 +106,6 @@ endif
 " Allow vim to set a custom font or color for a word
 syntax enable
 
-" Set the leader button
-let mapleader = ','
-
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
 
@@ -349,9 +346,6 @@ let g:go_auto_type_info = 1
 
 " Highlight variable uses
 let g:go_auto_sameids = 1
-
-" Fix for location list when vim-go is used together with Syntastic
-let g:go_list_type = "quickfix"
 
 " Using gopls to find definitions and information.
 let g:go_def_mode='gopls'
