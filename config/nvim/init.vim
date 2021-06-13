@@ -51,6 +51,9 @@ call plug#end()
 " General settings
 "----------------------------------------------
 set nocompatible                  " no need to be in old vim compatibility
+filetype on
+filetype plugin on
+filetype indent on
 
 set tabstop=4
 set shiftwidth=4
