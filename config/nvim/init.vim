@@ -170,9 +170,6 @@ nnoremap k gk
 " Map ESC to jj
 inoremap jj <ESC>
 
-" Let ; behave like :
-nnoremap ; :
-
 "----------------------------------------------
 " Splits
 "----------------------------------------------
