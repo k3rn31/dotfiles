@@ -190,6 +190,10 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
 "----------------------------------------------
 " Plugin: bling/vim-airline
 "----------------------------------------------
@@ -312,15 +316,11 @@ au FileType go set softtabstop=4
 au FileType go set tabstop=4
 au FileType go set colorcolumn=120
 
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
-
-autocmd FileType go nmap <leader>gb  <Plug>(go-build)
-autocmd FileType go nmap <leader>gr  <Plug>(go-run)
-autocmd FileType go nmap <leader>gt  <Plug>(go-test)
-autocmd FileType go nmap <leader>gtf  <Plug>(go-test-func)
-autocmd FileType go nmap <Leader>gc <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
+autocmd FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
 
 " Run goimports when running gofmt
 let g:go_fmt_command = "goimports"
@@ -367,6 +367,10 @@ au FileType rust set shiftwidth=4
 au FileType rust set softtabstop=4
 au FileType rust set tabstop=4
 au FileType rust set colorcolumn=100
+
+autocmd FileType rust nmap <leader>b  :Cbuild<CR>
+autocmd FileType rust nmap <leader>r  :Crun<CR>
+autocmd FileType rust nmap <leader>t  :Ctest<CR>
 
 "----------------------------------------------
 " Language: Bash
