@@ -59,6 +59,7 @@ filetype indent on
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set expandtab
 set autoindent                    " take indent for new line from previous line
 set smartindent                   " enable smart indentation
 set autoread                      " reload file if the file changes on the disk
