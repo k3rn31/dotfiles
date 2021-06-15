@@ -27,7 +27,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
-Plug 'ayu-theme/ayu-vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -38,13 +37,13 @@ else
 endif
 
 " Language support
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'plasticboy/vim-markdown'                 " Markdown syntax highlighting
-Plug 'cespare/vim-toml'
-Plug 'rust-lang/rust.vim'
+Plug 'fatih/vim-go', { 'for': 'go','do': ':GoUpdateBinaries' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " Colorschemes
-Plug 'arcticicestudio/nord-vim'
+Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
 
@@ -193,10 +192,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
-
 "----------------------------------------------
 " Plugin: bling/vim-airline
 "----------------------------------------------
@@ -250,7 +245,7 @@ let g:NERDTreeChDirMode = 2
 let g:nerdtree_tabs_autofind=1
 
 "----------------------------------------------
-" Plugin: bling/vim-airline
+" Plugin: preservim/tagbar
 "----------------------------------------------
 nmap <F8> :TagbarToggle<CR>
 
@@ -324,6 +319,8 @@ autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
 autocmd FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <Leader>a <Plug>(go-alternate-edit)
+autocmd FileType go nmap <Leader>as <Plug>(go-alternate-split)
 
 " Run goimports when running gofmt
 let g:go_fmt_command = "goimports"
