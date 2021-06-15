@@ -305,6 +305,10 @@ let g:vim_markdown_folding_disabled = 1
 " Auto shrink the TOC, so that it won't take up 50% of the screen
 let g:vim_markdown_toc_autofit = 1
 
+" Do not insert bulletpoints automaticalli to prevent wrapping problems
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
+
 "----------------------------------------------
 " Language: Golang
 "----------------------------------------------
