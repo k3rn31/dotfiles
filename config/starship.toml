@@ -1,2 +1,50 @@
 # I don't like the newline before the prompt
-add_newline=false
+add_newline = false
+
+format = """
+$username\
+$hostname\
+$shlvl\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$package\
+$helm\
+$cmake\
+$golang\
+$java\
+$kotlin\
+$nodejs\
+$python\
+$rust\
+$line_break\
+$kubernetes\
+$docker_context\
+$terraform\
+$vagrant\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$custom\
+$line_break\
+$cmd_duration\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+[gcloud]
+format = 'on [$symbol$account(@$domain)(\($region\))(\($project\))]($style) '
+
+[kubernetes]
+disabled = false
+format = '[$symbol$context( \($namespace\))]($style) '
+[kubernetes.context_aliases]
+"gke_wph-hc-dev1_us-central1_hc-integration" = "hc-integration"
