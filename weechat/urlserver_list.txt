@@ -1,0 +1,10 @@
+{
+  0: ('15/06/21 18:41:26', 'incoming-webhook', 'python.slack.kmbicsh.&invictus_code_reviews', 'http://172.19.24.133:9001/wphhc-bdd/review/WB-CR-110', '                   \t| link: http://172.19.24.133:9001/wphhc-bdd/review/WB-CR-110'),
+  1: ('15/06/21 18:42:15', 'jenkins', 'python.slack.kmbicsh.#wphhc_devops_hooks', 'http://35.238.138.20:8080/job/hc-platform-ci/831/', '          \t| You can check at http://35.238.138.20:8080/job/hc-platform-ci/831/'),
+  2: ('15/06/21 18:42:15', 'jenkins', 'python.slack.kmbicsh.#wphhc_devops_hooks', 'http://35.238.138.20:8080/job/spitfhir-cd/112/', '          \t| You can check at http://35.238.138.20:8080/job/spitfhir-cd/112/'),
+  3: ('15/06/21 18:42:15', 'jenkins', 'python.slack.kmbicsh.#wphhc_devops_hooks', 'http://35.238.138.20:8080/job/spitfhir-ci/94/', '          \t| You can check at http://35.238.138.20:8080/job/spitfhir-ci/94/'),
+  4: ('15/06/21 18:42:15', 'jenkins', 'python.slack.kmbicsh.#wphhc_devops_hooks', 'http://35.238.138.20:8080/job/adapter-cd/474/', '          \t| You can check at http://35.238.138.20:8080/job/adapter-cd/474/'),
+  5: ('15/06/21 18:43:42', 'jenkins', 'python.slack.kmbicsh.#wphhc_devops_hooks', 'http://35.238.138.20:8080/job/aidocudroid-ci/291/', '          \t| You can check at http://35.238.138.20:8080/job/aidocudroid-ci/291/'),
+  6: ('15/06/21 18:44:06', 'ChanServ', 'irc.libera.#go-nuts', 'https://golang.org/conduct', '--\tPvNotice(ChanServ): Please follow the Go Community Code of Conduct when chatting here. See https://golang.org/conduct'),
+  7: ('15/06/21 18:47:15', 'jenkins', 'python.slack.kmbicsh.#wphhc_devops_hooks', 'http://35.238.138.20:8080/job/vector-cd/65/', '          \t| You can check at http://35.238.138.20:8080/job/vector-cd/65/'),
+}
