@@ -67,6 +67,7 @@ set autowriteall                  " write on :quit
 set clipboard=unnamedplus
 set cursorline                    " highlight the current line for the cursor
 set encoding=utf-8
+set nrformats=                    " treat all numbers as decimals
 set nospell                       " disable spelling
 set noswapfile                    " disable swapfile usage
 set visualbell
@@ -83,7 +84,7 @@ set ttyfast
 
 set nowrap
 set colorcolumn=81                " highlight the 80th column as an indicator
-set formatoptions=qrn1
+set formatoptions=tcroqn1j
 
 set list                          " show trailing whitespace
 set listchars=tab:▸\ ,eol:¬
