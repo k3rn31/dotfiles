@@ -29,11 +29,11 @@ Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 " Language support
@@ -137,15 +137,15 @@ map <M-f> :FZF<CR>
 " Colors
 "----------------------------------------------
 if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
 if (has("termguicolors"))
-  set termguicolors
+    set termguicolors
 endif
 
 set background=dark
@@ -225,18 +225,18 @@ nnoremap <F2> :NERDTreeToggle<CR>
 " Start NERDTree when Vim starts with a directory argument.
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 &&
-    \ isdirectory(argv()[0]) &&
-    \ !exists('s:std_in') |
-    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] |
-    \ endif
+            \ isdirectory(argv()[0]) &&
+            \ !exists('s:std_in') |
+            \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] |
+            \ endif
 
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 &&
-    \ winnr('$') == 1 &&
-    \ exists('b:NERDTree') &&
-    \ b:NERDTree.isTabTree() |
-    \ quit |
-    \ endif
+            \ winnr('$') == 1 &&
+            \ exists('b:NERDTree') &&
+            \ b:NERDTree.isTabTree() |
+            \ quit |
+            \ endif
 
 " Show hidden files by default.
 let NERDTreeShowHidden = 1
@@ -282,14 +282,14 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'rust': ['rustfmt']
-\}
+            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \   'rust': ['rustfmt']
+            \}
 
 let g:ale_linters = {
-\  'rust': ['analyzer'],
-\  'go': ['go build', 'golangci-lint'],
-\}
+            \  'rust': ['analyzer'],
+            \  'go': ['go build', 'golangci-lint'],
+            \}
 let g:ale_go_golangci_lint_options = '--enable-all --disable wsl --disable goimports --disable gofmt --fix'
 let g:ale_go_golangci_lint_package = 1
 let g:ale_go_gofmt_options = '-s'
