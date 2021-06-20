@@ -378,6 +378,7 @@ au FileType rust set colorcolumn=100
 autocmd FileType rust nmap <leader>b  :Cbuild<CR>
 autocmd FileType rust nmap <leader>r  :Crun<CR>
 autocmd FileType rust nmap <leader>t  :Ctest<CR>
+let g:rustfmt_autosave = 1
 
 "----------------------------------------------
 " Language: Bash
