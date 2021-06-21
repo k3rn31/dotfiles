@@ -1,10 +1,6 @@
 "----------------------------------------------
-" Plugin management
-"
-" Download vim-plug from the URL below and follow the installation
-" instructions:
-" https://github.com/junegunn/vim-plug
-"
+" Plugin management Download vim-plug from the URL below and follow the
+" installation instructions: https://github.com/junegunn/vim-plug
 " Some plugins need python3 supporte: pip3 install --user pynvim
 "
 " Other tools to install: fzf, bat, ctags
@@ -83,6 +79,9 @@ set title                         " let vim set the terminal title
 set updatetime=100                " redraw the status bar often
 set t_Co=256
 set ttyfast
+set undofile
+set undodir=~/.vim/undo
+set undolevels=10000
 
 set nowrap
 set colorcolumn=81                " highlight the 80th column as an indicator
@@ -113,6 +112,10 @@ syntax enable
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
 
+" Set mapleader to <SPACE>
+nnoremap <SPACE> <NOP>
+let mapleader=" "
+
 "----------------------------------------------
 " Search
 "----------------------------------------------
@@ -127,8 +130,6 @@ set incsearch
 set showmatch
 set hlsearch
 nnoremap <leader><space> :noh<cr>
-nnoremap <tab> %
-vnoremap <tab> %
 
 " FILE SEARCH:
 "-------------
@@ -184,7 +185,7 @@ set splitright
 
 " Creating splits
 nnoremap <leader>v :vsplit<cr>
-nnoremap <leader>h :split<cr>
+nnoremap <leader>b :split<cr>
 
 " Closing splits
 nnoremap <leader>q :close<cr>
@@ -248,6 +249,11 @@ let g:NERDTreeChDirMode = 2
 let g:nerdtree_tabs_autofind=1
 
 "----------------------------------------------
+" Plugin: preservim/nerdcommenter
+"----------------------------------------------
+let g:NERDCreateDefaultMappings = 1
+
+"----------------------------------------------
 " Plugin: preservim/tagbar
 "----------------------------------------------
 nmap <F8> :TagbarToggle<CR>
@@ -280,8 +286,6 @@ let g:ale_sign_warning = '⚠'
 nnoremap <leader>d :ALEGoToDefinition<CR>
 nnoremap <leader>r :ALEFindReference<CR>
 nnoremap <leader>h :ALEHover<CR>
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
