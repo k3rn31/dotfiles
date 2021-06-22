@@ -1,9 +1,9 @@
 "----------------------------------------------
-" Plugin management Download vim-plug from the URL below and follow the
+" Pywlugin management Download vim-plug from the URL below and follow the
 " installation instructions: https://github.com/junegunn/vim-plug
 " Some plugins need python3 supporte: pip3 install --user pynvim
 "
-" Other tools to install: fzf, bat, ctags
+" Other tools to install: fzf, bat,test.txt ctags
 "----------------------------------------------
 call plug#begin('~/.vim/plugged')
 
@@ -69,6 +69,7 @@ set nrformats=                    " treat all numbers as decimals
 set nospell                       " disable spelling
 set noswapfile                    " disable swapfile usage
 set visualbell
+set hidden
 set wildmenu
 set wildmode=list:longest
 set ruler
