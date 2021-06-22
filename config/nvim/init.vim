@@ -326,7 +326,7 @@ au FileType go set softtabstop=4
 au FileType go set tabstop=4
 au FileType go set colorcolumn=120
 
-autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>y  <Plug>(go-build)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
@@ -380,7 +380,7 @@ au FileType rust set softtabstop=4
 au FileType rust set tabstop=4
 au FileType rust set colorcolumn=100
 
-autocmd FileType rust nmap <leader>b  :Cbuild<CR>
+autocmd FileType rust nmap <leader>y  :Cbuild<CR>
 autocmd FileType rust nmap <leader>r  :Crun<CR>
 autocmd FileType rust nmap <leader>t  :Ctest<CR>
 let g:rustfmt_autosave = 1
