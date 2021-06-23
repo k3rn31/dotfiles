@@ -218,9 +218,6 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-" Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
-
 "----------------------------------------------
 " Plugin: preservim/nerdtree
 "----------------------------------------------
@@ -276,7 +273,9 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 
 let g:ale_lint_on_text_changed = 'always'
 let g:ale_lint_on_insert_leave = 0
-let g:ale_hover_to_preview = 1
+
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
 
 " Use deoplete
 let g:ale_completion_enabled = 0
@@ -284,9 +283,16 @@ let g:ale_completion_autoimport = 0
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 
-nnoremap <leader>d :ALEGoToDefinition<CR>
-nnoremap <leader>r :ALEFindReference<CR>
-nnoremap <leader>h :ALEHover<CR>
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+nnoremap <leader>td :ALEGoToDefinition<CR>
+nnoremap <leader>tr :ALEFindReference<CR>
+nnoremap <leader>ts :ALESymbolSearch<CR>
+
+nmap <silent> <M-k> <Plug>(ale_previous_wrap)
+nmap <silent> <M-j> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -297,6 +303,7 @@ let g:ale_linters = {
             \  'rust': ['analyzer'],
             \  'go': ['go build', 'golangci-lint'],
             \}
+
 let g:ale_go_golangci_lint_options = '--enable-all --disable wsl --disable goimports --disable gofmt --fix'
 let g:ale_go_golangci_lint_package = 1
 let g:ale_go_gofmt_options = '-s'
@@ -304,6 +311,7 @@ let g:ale_go_gofmt_options = '-s'
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 let g:ale_rust_cargo_clippy_options = '--fix'
+
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
 "----------------------------------------------
@@ -338,7 +346,7 @@ autocmd FileType go nmap <Leader>as <Plug>(go-alternate-split)
 let g:go_fmt_command = "goimports"
 
 " Enable GoMetaLinter on save
-let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave = 0
 
 " Enable syntax highlighting per default
 let g:go_highlight_types = 1
