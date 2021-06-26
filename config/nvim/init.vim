@@ -14,7 +14,6 @@ Plug 'preservim/nerdtree'
 Plug 'preservim/tagbar'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'mg979/vim-visual-multi'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
