@@ -10,15 +10,16 @@ call plug#begin('~/.vim/plugged')
 " General plugins
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'preservim/tagbar'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
 
 if has('nvim')
@@ -117,6 +118,14 @@ let mapleader=" "
 
 " MakeTags generates ctags for the current project
 command! MakeTags !ctags -R .
+
+"----------------------------------------------
+" File Browsing
+"----------------------------------------------
+let g:netrw_banner=0
+let g:netrw_browse_split=4      " open in prior window
+let g:netrw_altv=1              " open splits to the right
+let g:netrw_liststyle=3         " tree view
 
 "----------------------------------------------
 " Search
