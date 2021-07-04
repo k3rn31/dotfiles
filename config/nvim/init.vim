@@ -10,9 +10,7 @@ call plug#begin('~/.vim/plugged')
 " General plugins
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
-Plug 'preservim/nerdtree'
 Plug 'preservim/tagbar'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
@@ -70,7 +68,6 @@ set noswapfile                    " disable swapfile usage
 set visualbell
 set hidden
 set wildmenu
-set wildmode=list:longest
 set ruler
 set relativenumber
 set softtabstop=2
@@ -89,6 +86,8 @@ set formatoptions=tcroqn1j
 
 set list                          " show trailing whitespace
 set listchars=tab:▸\ ,eol:¬
+
+set path+=**                      " Search in subfolders
 
 " neovim specific settings
 if has('nvim')
@@ -214,34 +213,6 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-
-"----------------------------------------------
-" Plugin: preservim/nerdtree
-"----------------------------------------------
-nnoremap <F2> :NERDTreeToggle<CR>
-
-" Start NERDTree when Vim starts with a directory argument.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 &&
-            \ isdirectory(argv()[0]) &&
-            \ !exists('s:std_in') |
-            \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] |
-            \ endif
-
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 &&
-            \ winnr('$') == 1 &&
-            \ exists('b:NERDTree') &&
-            \ b:NERDTree.isTabTree() |
-            \ quit |
-            \ endif
-
-" Show hidden files by default.
-let NERDTreeShowHidden = 1
-" Allow NERDTree to change session root.
-let g:NERDTreeChDirMode = 2
-"Automatically find and select currently opened file in NERDTree
-let g:nerdtree_tabs_autofind=1
 
 "----------------------------------------------
 " Plugin: preservim/nerdcommenter
