@@ -19,27 +19,30 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 Plug 'dense-analysis/ale'
+Plug 'nathunsmitty/nvim-ale-diagnostic'
 
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'neovim/nvim-lspconfig'
 
-" Language support
-Plug 'fatih/vim-go', { 'for': 'go','do': ':GoUpdateBinaries' }
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+" Language tools
+Plug 'simrat39/rust-tools.nvim'
 
 " Colorschemes
 Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
+
+lua << EOF
+-- Language support
+require'lspconfig'.bashls.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.rust_analyzer.setup{}
+EOF
 
 "----------------------------------------------
 " General settings
@@ -91,14 +94,11 @@ set listchars=tab:▸\ ,eol:¬
 set path+=**                      " Search in subfolders
 
 " neovim specific settings
-if has('nvim')
-    " Set the Python binaries neovim is using. Please note that you will need to
-    " install the neovim package for these binaries separately like this for
-    " example:
-    " pip3.6 install -U neovim
-    let g:python_host_prog = '/usr/bin/python2'
-    let g:python3_host_prog = '/usr/bin/python3'
-endif
+" Set the Python binaries neovim is using. Please note that you will need to
+" install the neovim package for these binaries separately like this for
+" example:
+" pip3.6 install -U neovim
+let g:python3_host_prog = '/usr/bin/python3'
 
 " Enable mouse if possible
 if has('mouse')
@@ -146,12 +146,62 @@ nnoremap <leader><space> :noh<cr>
 map <M-f> :FZF<CR>
 
 "----------------------------------------------
+" Plugin: windwp/nvim-autopairs
+"----------------------------------------------
+lua << EOF
+local remap = vim.api.nvim_set_keymap
+local npairs = require('nvim-autopairs')
+npairs.setup()
+
+-- skip it, if you use another global object
+_G.MUtils= {}
+
+MUtils.completion_confirm=function()
+  if vim.fn.pumvisible() ~= 0  then
+      return npairs.esc("<cr>")
+  else
+    return npairs.autopairs_cr()
+  end
+end
+
+remap('i' , '<CR>','v:lua.MUtils.completion_confirm()', {expr = true , noremap = true})
+EOF
+
+"----------------------------------------------
+" Plugin: nvim-treesitter/nvim-treesitter
+"----------------------------------------------
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "maintained",
+    highlight = {
+        enable = true,
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            indent = {
+                enable = true,
+            },
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ab"] = "@block.outer",
+                ["ib"] = "@block.inner",
+            }
+        }
+    },
+    autopairs = {
+        enable = true
+    }
+}
+EOF
+
+"----------------------------------------------
 " Colors
 "----------------------------------------------
-if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
+"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
@@ -227,11 +277,6 @@ if !exists('g:airline_symbols')
 endif
 
 "----------------------------------------------
-" Plugin: preservim/nerdcommenter
-"----------------------------------------------
-let g:NERDCreateDefaultMappings = 1
-
-"----------------------------------------------
 " Plugin: preservim/tagbar
 "----------------------------------------------
 nmap <F8> :TagbarToggle<CR>
@@ -240,7 +285,6 @@ nmap <F8> :TagbarToggle<CR>
 " Plugin: Shougo/deoplete
 "----------------------------------------------
 let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 " Use tab to autocomplete
 inoremap <silent><expr> <TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -249,7 +293,19 @@ inoremap <silent><expr><S-TAB> pumvisible() ? "\<c-p>" : "\<S-TAB>"
 "----------------------------------------------
 " Plugin: dense-analysis/ale
 "----------------------------------------------
-set completeopt=menu,menuone,preview,noselect,noinsert
+
+lua << EOF
+require("nvim-ale-diagnostic")
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = false,
+    virtual_text = false,
+    signs = true,
+    update_in_insert = false,
+  }
+)
+EOF
 
 let g:ale_lint_on_text_changed = 'always'
 let g:ale_lint_on_insert_leave = 0
@@ -267,22 +323,21 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-nnoremap <leader>td :ALEGoToDefinition<CR>
-nnoremap <leader>tr :ALEFindReference<CR>
-nnoremap <leader>ts :ALESymbolSearch<CR>
+let g:ale_fix_on_save = 1
 
 nmap <silent> <M-k> <Plug>(ale_previous_wrap)
 nmap <silent> <M-j> <Plug>(ale_next_wrap)
 
 let g:ale_fixers = {
-            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \   'rust': ['rustfmt']
-            \}
+           \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+           \   'rust': ['rustfmt'],
+           \   'go': ['goimports']
+           \}
 
 let g:ale_linters = {
-            \  'rust': ['analyzer'],
-            \  'go': ['go build', 'golangci-lint'],
-            \}
+           \  'rust': ['analyzer'],
+           \  'go': ['go build', 'golangci-lint'],
+           \}
 
 let g:ale_go_golangci_lint_options = '--enable-all --disable wsl --disable goimports --disable gofmt --fix'
 let g:ale_go_golangci_lint_package = 1
@@ -291,6 +346,16 @@ let g:ale_go_gofmt_options = '-s'
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 let g:ale_rust_cargo_clippy_options = '--fix'
+
+"----------------------------------------------
+" Plugin: neovim/nvim-lspconfig
+"----------------------------------------------
+nmap <leader>tD <cmd>lua vim.lsp.buf.declaration()<CR>
+nmap <leader>td <cmd>lua vim.lsp.buf.definition()<CR>
+nmap <leader>tt <cmd>lua vim.lsp.buf.type_definition()<CR>
+nmap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+nmap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
+nmap <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
@@ -314,51 +379,6 @@ au FileType go set softtabstop=4
 au FileType go set tabstop=4
 au FileType go set colorcolumn=120
 
-autocmd FileType go nmap <leader>y  <Plug>(go-build)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd FileType go nmap <leader>t  <Plug>(go-test)
-autocmd FileType go nmap <leader>tf <Plug>(go-test-func)
-autocmd FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <Leader>a <Plug>(go-alternate-edit)
-autocmd FileType go nmap <Leader>as <Plug>(go-alternate-split)
-
-" Run goimports when running gofmt
-let g:go_fmt_command = "goimports"
-
-" Enable GoMetaLinter on save
-let g:go_metalinter_autosave = 0
-
-" Enable syntax highlighting per default
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-
-" Show the progress when running :GoCoverage
-let g:go_echo_command_info = 1
-
-" Show type information
-let g:go_auto_type_info = 1
-
-" Highlight variable uses
-let g:go_auto_sameids = 1
-
-" Using gopls to find definitions and information.
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
-
-" Add the failing test name to the output of :GoTest
-let g:go_test_show_name = 1
-
-" Set whether the JSON tags should be snakecase or camelcase.
-let g:go_addtags_transform = "snakecase"
-
-let g:go_def_mapping_enabled = 0
-
 "----------------------------------------------
 " Language: Rust
 "----------------------------------------------
@@ -368,10 +388,17 @@ au FileType rust set softtabstop=4
 au FileType rust set tabstop=4
 au FileType rust set colorcolumn=100
 
-autocmd FileType rust nmap <leader>y  :Cbuild<CR>
-autocmd FileType rust nmap <leader>r  :Crun<CR>
-autocmd FileType rust nmap <leader>t  :Ctest<CR>
-let g:rustfmt_autosave = 1
+" Plugin: 'simrat39/rust-tools.nvim'
+lua << EOF
+local opts = {
+    tools = {
+        runnables = {
+            use_telescope = false,
+        },
+    }
+}
+require'rust-tools'.setup(opts)
+EOF
 
 "----------------------------------------------
 " Language: Bash
