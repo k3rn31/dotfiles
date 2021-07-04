@@ -115,6 +115,9 @@ autocmd BufLeave * silent! :wa
 nnoremap <SPACE> <NOP>
 let mapleader=" "
 
+" MakeTags generates ctags for the current project
+command! MakeTags !ctags -R .
+
 "----------------------------------------------
 " Search
 "----------------------------------------------
