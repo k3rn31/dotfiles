@@ -8,7 +8,8 @@
 call plug#begin('~/.vim/plugged')
 
 " General plugins
-Plug 'bling/vim-airline'
+Plug 'hoob3rt/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -25,7 +26,7 @@ Plug 'nathunsmitty/nvim-ale-diagnostic'
 
 Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lspconfig'
 
@@ -33,7 +34,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'simrat39/rust-tools.nvim'
 
 " Colorschemes
-Plug 'ayu-theme/ayu-vim'
+Plug 'folke/tokyonight.nvim'
 
 call plug#end()
 
@@ -212,8 +213,7 @@ endif
 
 set background=dark
 
-let ayucolor="mirage"
-colorscheme ayu
+colorscheme tokyonight
 
 "----------------------------------------------
 " Navigation
@@ -256,25 +256,18 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 "----------------------------------------------
-" Plugin: bling/vim-airline
+" Plugin: hoob3rt/lualine.nvim
 "----------------------------------------------
-" Show status bar by default.
-set laststatus=2
-
-" Enable top tabline.
-let g:airline#extensions#tabline#enabled = 1
-
-" Disable showing tabs in the tabline. This will ensure that the buffers are
-" what is shown in the tabline at all times.
-let g:airline#extensions#tabline#show_tabs = 0
-
-" Enable powerline fonts.
-let g:airline_powerline_fonts = 1
-
-" Explicitly define some symbols that did not work well for me in Linux.
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
+lua << EOF
+require'nvim-web-devicons'.setup{
+    default = true;
+}
+require('lualine').setup {
+  options = {
+    theme = 'tokyonight'
+  }
+}
+EOF
 
 "----------------------------------------------
 " Plugin: preservim/tagbar
@@ -309,9 +302,6 @@ EOF
 
 let g:ale_lint_on_text_changed = 'always'
 let g:ale_lint_on_insert_leave = 0
-
-" Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
 
 " Use deoplete
 let g:ale_completion_enabled = 0
