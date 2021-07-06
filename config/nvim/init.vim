@@ -316,6 +316,8 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 nmap <silent> <M-k> <Plug>(ale_previous_wrap)
 nmap <silent> <M-j> <Plug>(ale_next_wrap)
 
+let g:ale_fix_on_save = 1
+
 let g:ale_fixers = {
            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
            \   'rust': ['rustfmt'],
@@ -347,10 +349,10 @@ nmap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 nmap <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 
 " auto-format
-autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
-autocmd BufWritePre *.go.in lua vim.lsp.buf.formatting_sync(nil, 1000)
-autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
-autocmd BufWritePre *.rs.in lua vim.lsp.buf.formatting_sync(nil, 1000)
+" autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+" autocmd BufWritePre *.go.in lua vim.lsp.buf.formatting_sync(nil, 1000)
+" autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
+" autocmd BufWritePre *.rs.in lua vim.lsp.buf.formatting_sync(nil, 1000)
 
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
