@@ -313,8 +313,6 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-let g:ale_fix_on_save = 1
-
 nmap <silent> <M-k> <Plug>(ale_previous_wrap)
 nmap <silent> <M-j> <Plug>(ale_next_wrap)
 
@@ -340,17 +338,24 @@ let g:ale_rust_cargo_clippy_options = '--fix'
 "----------------------------------------------
 " Plugin: neovim/nvim-lspconfig
 "----------------------------------------------
-nmap <leader>tD <cmd>lua vim.lsp.buf.declaration()<CR>
-nmap <leader>td <cmd>lua vim.lsp.buf.definition()<CR>
-nmap <leader>tt <cmd>lua vim.lsp.buf.type_definition()<CR>
+nmap <leader>gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nmap <leader>gd <cmd>lua vim.lsp.buf.definition()<CR>
+nmap <leader>gt <cmd>lua vim.lsp.buf.type_definition()<CR>
+nmap <leader>gr <cmd>lua vim.lsp.buf.references()<CR>
 nmap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
 nmap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 nmap <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 
+" auto-format
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.go.in lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.rs.in lua vim.lsp.buf.formatting_sync(nil, 1000)
+
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
 "----------------------------------------------
-" Disable folding
+" Disable foldink
 let g:vim_markdown_folding_disabled = 1
 
 " Auto shrink the TOC, so that it won't take up 50% of the screen
