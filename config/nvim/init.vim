@@ -53,6 +53,8 @@ if has("autocmd")
     filetype on
     filetype plugin on
     filetype indent on
+    " Autosave buffers before leaving them
+    autocmd BufLeave * silent! :wa
 endif
 
 set tabstop=4
@@ -110,9 +112,6 @@ endif
 " Allow vim to set a custom font or color for a word
 syntax enable
 
-" Autosave buffers before leaving them
-autocmd BufLeave * silent! :wa
-
 " Set mapleader to <SPACE>
 nnoremap <SPACE> <NOP>
 let mapleader=" "
@@ -145,58 +144,6 @@ nnoremap <leader><space> :noh<cr>
 "-------------
 "allows FZF to open by pressing ALT-F
 map <M-f> :FZF<CR>
-
-"----------------------------------------------
-" Plugin: windwp/nvim-autopairs
-"----------------------------------------------
-lua << EOF
-local remap = vim.api.nvim_set_keymap
-local npairs = require('nvim-autopairs')
-npairs.setup()
-
--- skip it, if you use another global object
-_G.MUtils= {}
-
-MUtils.completion_confirm=function()
-  if vim.fn.pumvisible() ~= 0  then
-      return npairs.esc("<cr>")
-  else
-    return npairs.autopairs_cr()
-  end
-end
-
-remap('i' , '<CR>','v:lua.MUtils.completion_confirm()', {expr = true , noremap = true})
-EOF
-
-"----------------------------------------------
-" Plugin: nvim-treesitter/nvim-treesitter
-"----------------------------------------------
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = "maintained",
-    highlight = {
-        enable = true,
-    },
-    textobjects = {
-        select = {
-            enable = true,
-            indent = {
-                enable = true,
-            },
-            keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ab"] = "@block.outer",
-                ["ib"] = "@block.inner",
-            }
-        }
-    },
-    autopairs = {
-        enable = true
-    }
-}
-EOF
 
 "----------------------------------------------
 " Colors
@@ -256,6 +203,36 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 "----------------------------------------------
+" Plugin: nvim-treesitter/nvim-treesitter
+"----------------------------------------------
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "maintained",
+    highlight = {
+        enable = true,
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            indent = {
+                enable = true,
+            },
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ab"] = "@block.outer",
+                ["ib"] = "@block.inner",
+            }
+        }
+    },
+    autopairs = {
+        enable = true
+    }
+}
+EOF
+
+"----------------------------------------------
 " Plugin: hoob3rt/lualine.nvim
 "----------------------------------------------
 lua << EOF
@@ -280,7 +257,7 @@ nmap <F8> :TagbarToggle<CR>
 let g:deoplete#enable_at_startup = 1
 
 " Use tab to autocomplete
-inoremap <silent><expr> <TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr><S-TAB> pumvisible() ? "\<c-p>" : "\<S-TAB>"
 
 "----------------------------------------------
@@ -346,13 +323,35 @@ nmap <leader>gt <cmd>lua vim.lsp.buf.type_definition()<CR>
 nmap <leader>gr <cmd>lua vim.lsp.buf.references()<CR>
 nmap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
 nmap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
-nmap <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nmap <leader>se <cmd>lua vim.lsp.buf.signature_help()<CR>
 
 " auto-format
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
 " autocmd BufWritePre *.go.in lua vim.lsp.buf.formatting_sync(nil, 1000)
 " autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
 " autocmd BufWritePre *.rs.in lua vim.lsp.buf.formatting_sync(nil, 1000)
+
+"----------------------------------------------
+" Plugin: windwp/nvim-autopairs
+"----------------------------------------------
+lua << EOF
+local remap = vim.api.nvim_set_keymap
+local npairs = require('nvim-autopairs')
+npairs.setup()
+
+-- skip it, if you use another global object
+_G.MUtils= {}
+
+MUtils.completion_confirm=function()
+  if vim.fn.pumvisible() ~= 0  then
+      return npairs.esc("<cr>")
+  else
+    return npairs.autopairs_cr()
+  end
+end
+
+remap('i' , '<CR>','v:lua.MUtils.completion_confirm()', {expr = true , noremap = true})
+EOF
 
 "----------------------------------------------
 " Plugin: plasticboy/vim-markdown
