@@ -32,6 +32,7 @@ Plug 'neovim/nvim-lspconfig'
 
 " Language tools
 Plug 'simrat39/rust-tools.nvim'
+Plug 'mattn/emmet-vim'
 
 " Colorschemes
 Plug 'folke/tokyonight.nvim'
