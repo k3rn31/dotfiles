@@ -1,5 +1,5 @@
 "----------------------------------------------
-" Pywlugin management Download vim-plug from the URL below and follow the
+" Plugin management Download vim-plug from the URL below and follow the
 " installation instructions: https://github.com/junegunn/vim-plug
 " Some plugins need python3 supporte: pip3 install --user pynvim
 "
@@ -23,9 +23,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'windwp/nvim-autopairs'
 Plug 'dense-analysis/ale'
 Plug 'nathunsmitty/nvim-ale-diagnostic'
-
-Plug 'Shougo/deoplete-lsp', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'hrsh7th/nvim-compe'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lspconfig'
@@ -44,6 +43,7 @@ lua << EOF
 require'lspconfig'.bashls.setup{}
 require'lspconfig'.gopls.setup{}
 require'lspconfig'.rust_analyzer.setup{}
+require'lsp_signature'.setup()
 EOF
 
 "----------------------------------------------
@@ -253,13 +253,70 @@ EOF
 nmap <F8> :TagbarToggle<CR>
 
 "----------------------------------------------
-" Plugin: Shougo/deoplete
+" Plugin: hrsh7th/nvim-compe
 "----------------------------------------------
-let g:deoplete#enable_at_startup = 1
+set completeopt=menuone,noselect
 
-" Use tab to autocomplete
-inoremap <silent><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <silent><expr><S-TAB> pumvisible() ? "\<c-p>" : "\<S-TAB>"
+lua << EOF
+-- Compe setup
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    nvim_lsp = true;
+  };
+}
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  else
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
 
 "----------------------------------------------
 " Plugin: dense-analysis/ale
@@ -281,7 +338,7 @@ EOF
 let g:ale_lint_on_text_changed = 'always'
 let g:ale_lint_on_insert_leave = 0
 
-" Use deoplete
+" Use completion plugin
 let g:ale_completion_enabled = 0
 let g:ale_completion_autoimport = 0
 let g:ale_sign_error = '✘'
