@@ -1,13 +1,13 @@
 #!/bin/sh
 
 # Set some defalut applications
-export TERMINAL=alacritty
+export TERMINAL=kitty
 export BROWSER=firefox
 
 # Position external display
 if xrandr --verbose | grep -w -q "HDMI-1 connected"; then
   echo "External display detected"
-  xrandr --output HDMI-1 --primary --auto --output eDP-1 --right-of HDMI-1 
+  xrandr --output HDMI-1 --primary --auto --output eDP-1 --right-of HDMI-1
 fi
 
 # Setup Keyboard
