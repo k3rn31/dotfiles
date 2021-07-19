@@ -2,7 +2,7 @@
 
 # Set some defalut applications
 export TERMINAL=kitty
-export BROWSER=firefox
+export BROWSER=qutebrowser
 
 # Position external display
 if xrandr --verbose | grep -w -q "HDMI-1 connected"; then
