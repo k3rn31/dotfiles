@@ -28,6 +28,7 @@ Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lspconfig'
+Plug 'junegunn/goyo.vim'
 
 " Language tools
 Plug 'simrat39/rust-tools.nvim'
@@ -356,12 +357,13 @@ let g:ale_fix_on_save = 1
 let g:ale_fixers = {
            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
            \   'rust': ['rustfmt'],
-           \   'go': ['goimports']
+           \   'go': ['goimports'],
            \}
 
 let g:ale_linters = {
            \  'rust': ['analyzer'],
            \  'go': ['go build', 'golangci-lint'],
+           \  'markdown': ['languagetool'],
            \}
 
 let g:ale_go_golangci_lint_options = '--enable-all --disable wsl --disable goimports --disable gofmt --fix'
