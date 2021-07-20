@@ -12,3 +12,11 @@ bind-key j down
 bind-key k up
 bind-key l open
 bind-key h quit
+
+color background          white   black
+color listnormal          white   black
+color listnormal_unread   red     black
+color listfocus           black   red     bold
+color listfocus_unread    black   red     bold
+color info                black   cyan    bold
+color article             white   black
