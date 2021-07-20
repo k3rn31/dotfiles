@@ -1,0 +1,65 @@
+# Accounts
+source ~/.config/neomutt/accounts/dpgmail
+folder-hook $folder 'source ~/.config/neomutt/accounts/dpgmail'
+
+set header_cache=~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+
+set sidebar_format = "%B%* %F:%N:%S"
+set mail_check_stats
+set sidebar_width = 25
+set sidebar_divider_char = '│'
+
+# Read in plain text if possible
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+set mailcap_path = ~/.mailcap
+mime_lookup application/octet-stream
+set mime_type_query_command = "xdg-mime query filetype"
+
+set use_from
+set mail_check = 0
+
+set edit_headers                      # show headers when composing
+set askcc                             # ask for CC:
+set forward_format = "Fwd: %s"        # format of subject when forwaring
+set forward_quote                     # include message in forward
+set reply_to                          # reply to Reply to: field
+set include                           # include message in reply
+unset help                            # no help bar at the top
+unset mark_old                        # just read/new
+set pipe_decode                       # strip headers and eval mime when piping
+set thorough_search                   # strip headers and eval mime before searching
+
+set date_format="%y/%m/%d %I:%M%p"
+set sort = threads
+set sort_aux = reverse-last-date-received
+set sort_re
+
+set send_charset = "utf-8:iso-8859-1:us-ascii"
+set charset = "utf-8"
+
+######################
+#  PGP Encryption    #
+######################
+set crypt_use_gpgme = yes
+
+######################
+#  NotMuch Settings  #
+######################
+# All the notmuch settings are documented here:
+# https://neomutt.org/feature/notmuch
+
+# The folder is set in the account specifi config file
+
+# Makes notmuch return threads rather than messages
+set nm_query_type = "threads"
+# Binding for notmuch search
+bind index \\ vfolder-from-query
+# Search back
+bind index N search-opposite
+
+# Source configurations
+source ~/.config/neomutt/colors
+source ~/.config/neomutt/mappings

@@ -1,0 +1,5 @@
+text/html; $BROWSER %s
+text/html; w3m -I %{charset} -T text/html -dump; copiousoutput;
+application/pdf; zathura %s pdf
+image/png; feh %s
+image/jpeg; feh %s
