@@ -19,11 +19,11 @@ dropbox &
 # Start unclutter to hide mouse cursor
 unclutter &
 
-# Jetbrains Toolbox
-/usr/bin/jetbrains-toolbox --minimize &
-
 # Start applets
 /usr/bin/blueman-applet	# Bluetooth Manager
 
 # Start Japanese input
 /usr/bin/fcitx -d
+
+# Protonmail bridge
+# /usr/bin/protonmail-bridge
