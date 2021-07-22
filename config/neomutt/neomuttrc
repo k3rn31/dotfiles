@@ -1,6 +1,10 @@
 # Accounts
 source ~/.config/neomutt/accounts/dpgmail
 folder-hook $folder 'source ~/.config/neomutt/accounts/dpgmail'
+source ~/.config/neomutt/accounts/mmproton
+folder-hook $folder 'source ~/.config/neomutt/accounts/mmproton'
+source ~/.config/neomutt/accounts/dpproton
+folder-hook $folder 'source ~/.config/neomutt/accounts/dpproton'
 
 set header_cache=~/.mutt/cache/headers
 set message_cachedir = ~/.mutt/cache/bodies

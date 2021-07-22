@@ -35,4 +35,6 @@ bind index,pager \Cp sidebar-prev-new
 bind index,pager \Cn sidebar-next-new
 bind index,pager B sidebar-toggle-visible
 
-macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/dpgmail<enter><change-folder>!<enter>'
+macro index,pager <f25> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/dpproton<enter><change-folder>!<enter>'
+macro index,pager <f26> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/mmproton<enter><change-folder>!<enter>'
+macro index,pager <f27> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/dpgmail<enter><change-folder>!<enter>'
