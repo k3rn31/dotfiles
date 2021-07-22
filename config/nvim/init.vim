@@ -29,6 +29,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lspconfig'
 Plug 'junegunn/goyo.vim'
+Plug 'puremourning/vimspector', {'do': ':VimspectorUpdate'}
 
 " Language tools
 Plug 'simrat39/rust-tools.nvim'
@@ -251,7 +252,13 @@ EOF
 "----------------------------------------------
 " Plugin: preservim/tagbar
 "----------------------------------------------
-nmap <F8> :TagbarToggle<CR>
+nmap <M-t> :TagbarToggle<CR>
+
+"----------------------------------------------
+" Plugin: puremourning/vimspector
+"----------------------------------------------
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_install_gadgets = [ 'lldb-vscode', 'vscode-go' ]
 
 "----------------------------------------------
 " Plugin: hrsh7th/nvim-compe
