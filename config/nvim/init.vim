@@ -40,14 +40,6 @@ Plug 'folke/tokyonight.nvim'
 
 call plug#end()
 
-lua << EOF
--- Language support
-require'lspconfig'.bashls.setup{}
-require'lspconfig'.gopls.setup{}
-require'lspconfig'.rust_analyzer.setup{}
-require'lsp_signature'.setup()
-EOF
-
 "----------------------------------------------
 " General settings
 "----------------------------------------------
@@ -365,6 +357,7 @@ let g:ale_fixers = {
            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
            \   'rust': ['rustfmt'],
            \   'go': ['goimports'],
+           \   'c': ['clang-format'],
            \}
 
 let g:ale_linters = {
@@ -386,11 +379,21 @@ let g:ale_rust_cargo_clippy_options = '--fix'
 "----------------------------------------------
 nmap <leader>gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nmap <leader>gd <cmd>lua vim.lsp.buf.definition()<CR>
+nmap <leader>gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nmap <leader>gt <cmd>lua vim.lsp.buf.type_definition()<CR>
 nmap <leader>gr <cmd>lua vim.lsp.buf.references()<CR>
 nmap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
 nmap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 nmap <leader>se <cmd>lua vim.lsp.buf.signature_help()<CR>
+
+lua << EOF
+-- Language support
+require'lspconfig'.bashls.setup{}
+require'lspconfig'.clangd.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.rust_analyzer.setup{}
+require'lsp_signature'.setup()
+EOF
 
 " auto-format
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
@@ -500,6 +503,14 @@ au FileType html set expandtab
 au FileType html set shiftwidth=2
 au FileType html set softtabstop=2
 au FileType html set tabstop=2
+
+"----------------------------------------------
+" Language: C
+"----------------------------------------------
+au FileType c set expandtab
+au FileType c set shiftwidth=2
+au FileType c set softtabstop=2
+au FileType c set tabstop=2
 
 "----------------------------------------------
 " Language: JavaScript
