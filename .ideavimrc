@@ -1,2 +1,34 @@
+""" Base
+set scrolloff=10
+set number
+set relativenumber
+set showmode
+set showcmd
+set visualbell
 set clipboard+=unnamed
-set clipboard+=unnamedplus
+set clipboard+=ideaput
+set ideajoin
+set idearefactormode=keep
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+""" Leader key
+let mapleader = " "
+
+map <leader>f :action Find<CR>
+map <leader>g :action Generate<CR>
+
+" Advanced
+set multiple-cursors
+" Remap multiple-cursors for MacOS
+nmap <D-n> <Plug>NextWholeOccurrence
+xmap <D-n> <Plug>NextWholeOccurrence
+nmap <D-x> <Plug>SkipOccurrence
+xmap <D-x> <Plug>SkipOccurrence
+nmap <D-p> <Plug>RemoveOccurrence
+xmap <D-p> <Plug>RemoveOccurrence
+
+set highlightedyank
+set commentary
